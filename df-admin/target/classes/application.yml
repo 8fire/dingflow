@@ -64,7 +64,7 @@ mybatis-plus:
   typeAliasesPackage: com.agee.**.domain
   typeHandlersPackage: com.agee.system.handler
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapperLocations: classpath*:META-INF/modeler-mybatis-mappings/*.xml,classpath*:mapper/**/*Mapper.xml
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 加载全局的配置文件
   configLocation: classpath:mybatis/mybatis-config.xml
   #全局配置
