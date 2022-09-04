@@ -27,6 +27,8 @@
         <hutool.version>5.8.5</hutool.version>
         <lombok.version>1.18.10</lombok.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <so-token.version>1.30.0</so-token.version>
+        <knife4j.version>2.0.9</knife4j.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -58,11 +60,14 @@
                         <groupId>org.mybatis</groupId>
                         <artifactId>mybatis</artifactId>
                     </exclusion>
-                    <exclusion>
-                        <groupId>com.github.jsqlparser</groupId>
-                        <artifactId>jsqlparser</artifactId>
-                    </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!--mybatis-plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
 
             <!-- 阿里JSON解析器 -->
@@ -85,13 +90,25 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-            <!--mybatis-plus-->
+            <!-- Sa-Token 权限认证 -->
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${so-token.version}</version>
             </dependency>
 
+            <!--Knife4j的官方start包-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+           <!-- <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>-->
             <!--common模块-->
             <dependency>
                 <groupId>com.agee</groupId>
@@ -112,6 +129,9 @@
                 <artifactId>df-framework</artifactId>
                 <version>${ding-flow.version}</version>
             </dependency>
+
+
+
         </dependencies>
     </dependencyManagement>
 

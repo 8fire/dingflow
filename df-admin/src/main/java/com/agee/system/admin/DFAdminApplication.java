@@ -2,6 +2,7 @@ package com.agee.system.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description: DingFlow程序启动
  */
 @SpringBootApplication
+@ComponentScan({"springfox.documentation.schema","com.agee"})
 public class DFAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(DFAdminApplication.class, args);

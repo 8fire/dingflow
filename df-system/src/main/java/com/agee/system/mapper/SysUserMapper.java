@@ -2,6 +2,7 @@ package com.agee.system.mapper;
 
 import com.agee.system.domain.SysAuthUser;
 import com.agee.system.domain.SysUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * 
  * @author snow
  */
-public interface SysUserMapper {
+public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 根据条件分页查询用户列表
      * 

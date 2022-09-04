@@ -1,6 +1,10 @@
 package com.agee.system.domain;
 
 import com.agee.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,10 +17,12 @@ import java.util.List;
  * @author snow
  */
 @Data
+@TableName("sys_user")
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 用户ID */
+    @TableId(type = IdType.AUTO)
     private Long userId;
 
     /** 部门ID */
@@ -126,20 +132,5 @@ public class SysUser extends BaseEntity {
      * 钉钉用户ID
      */
     private String dingUserId;
-
-    public SysUser() {
-
-    }
-
-    public SysUser(Long userId)
-    {
-        this.userId = userId;
-    }
-    public SysUser(Long userId, String userName, String dingUserId)
-    {
-        this.userId = userId;
-        this.userName=userName;
-        this.dingUserId=dingUserId;
-    }
 
 }
