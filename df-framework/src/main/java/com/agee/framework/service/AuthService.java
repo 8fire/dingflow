@@ -1,10 +1,9 @@
 package com.agee.framework.service;
 
-import com.agee.common.core.domain.R;
 import com.agee.system.mapper.SysUserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.annotation.Resource;
 
 /**
  * @program: df
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Component
 public class AuthService {
 
-    @Autowired
+    @Resource
     private SysUserMapper sysUserMapper;
 
     public void doLogin(String userName,String password){
 
-        return R.ok();
+
+
     }
 }

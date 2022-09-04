@@ -76,16 +76,6 @@ public class SysUser extends BaseEntity {
     /** 密码最后更新时间 */
     private Date pwdUpdateDate;
 
-
-    private SysDept dept;
-
-    private List<SysRole> roles;
-
-    /** 角色组 */
-    private Long[] roleIds;
-
-    /** 岗位组 */
-    private Long[] postIds;
     /**
      * 	是否开启高管模式：
      * true：开启。开启后，手机号码对所有员工隐藏。普通员工无法对其发DING、发起钉钉免费商务电话。高管之间不受影响。
@@ -132,5 +122,19 @@ public class SysUser extends BaseEntity {
      * 钉钉用户ID
      */
     private String dingUserId;
+
+    @TableField(exist = false)
+    private SysDept dept;
+
+    @TableField(exist = false)
+    private List<SysRole> roles;
+
+    /** 角色组 */
+    @TableField(exist = false)
+    private Long[] roleIds;
+
+    /** 岗位组 */
+    @TableField(exist = false)
+    private Long[] postIds;
 
 }
