@@ -1,4 +1,4 @@
-package com.agee.system.admin.model.dto;
+package com.agee.admin.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package com.agee.system.admin.model.vo;
+package com.agee.admin.model.vo;
 
 import lombok.Data;
 

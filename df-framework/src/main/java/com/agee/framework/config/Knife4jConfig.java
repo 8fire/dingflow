@@ -27,7 +27,7 @@ public class Knife4jConfig {
                 .groupName("全部接口")
                 .apiInfo(dfApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.agee.system.admin.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.agee.admin.web"))
                 .paths(PathSelectors.any())
                 .build();
     }

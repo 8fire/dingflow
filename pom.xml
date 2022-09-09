@@ -27,7 +27,7 @@
         <hutool.version>5.8.5</hutool.version>
         <lombok.version>1.18.10</lombok.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <so-token.version>1.30.0</so-token.version>
+        <so-token.version>1.31.0</so-token.version>
         <knife4j.version>2.0.9</knife4j.version>
     </properties>
 
@@ -104,11 +104,6 @@
                 <version>${knife4j.version}</version>
             </dependency>
 
-           <!-- <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>-->
             <!--common模块-->
             <dependency>
                 <groupId>com.agee</groupId>

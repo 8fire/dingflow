@@ -91,4 +91,13 @@ public class Constants {
     public static final String IS_ASC = "isAsc";
 
 
+    public final static String LOGIN_USER_NAME = "login_user_name";
+
+
+    public final static String LOGIN_NICK_NAME = "login_nick_name";
+
+    public final static String LOGIN_USER_TYPE = "user_type";
+
+    //登录类型 验证码，三方，账户密码
+    public final static String LOGIN_TYPE = "login_type";
 }
