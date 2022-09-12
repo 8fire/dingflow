@@ -8,6 +8,7 @@ import com.agee.common.enums.ResponseCodeEnum;
  * @Description:
  */
 public class ServiceException extends RuntimeException{
+    private static final long serialVersionUID = -2676031306919674764L;
     /**
      * 异常编码
      */

@@ -7,6 +7,8 @@ package com.agee.common.enums;
  */
 public enum ResponseCodeEnum {
 
+    NO_LOGIN_ERROR(10000,"当前会话未登录"),
+
     NO_TOKEN_ERROR(10001,"未提供token"),
 
     INVALID_TOKEN_ERROR(10002,"无效的token"),
@@ -22,7 +24,9 @@ public enum ResponseCodeEnum {
     ACCOUNT_NOT_EXIST_ERROR(10007,"账户不存在"),
 
     ACCOUNT_PASSWORD_ERROR(10008,"用户帐号或密码不正确"),
+
     ACCOUNT_LOCKED_ERROR(10009,"该帐号已锁定,请联系管理员"),
+
     ACCOUNT_DISABLED_ERROR(10010,"该账户已被禁用，请联系管理员"),
 
     ACCOUNT_NOT_AUTH_ERROR(11000,"账户权限不足"),
