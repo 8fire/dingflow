@@ -1,10 +1,14 @@
 package com.agee.system.domain;
 
 import com.agee.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 角色表 sys_role
@@ -16,7 +20,7 @@ public class SysRole extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 角色ID */
-
+    @TableId(type = IdType.AUTO)
     private Long roleId;
 
     private Long parentId;
@@ -39,22 +43,34 @@ public class SysRole extends BaseEntity {
     /** 角色状态（0正常 1停用） */
     private String status;
 
+    /**
+     * 角色类型（0-系统角色，1-流程角色）
+     */
+    private Integer roleType;
+
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
 
     /** 用户是否存在此角色标识 默认不存在 */
+    @TableField(exist = false)
     private boolean flag = false;
 
     /** 菜单组 */
+    @TableField(exist = false)
     private Long[] menuIds;
 
     /** 部门组（数据权限） */
+    @TableField(exist = false)
     private Long[] deptIds;
 
-
-    private Integer roleType;
+    /**
+     * 角色菜单权限
+     */
+    @TableField(exist = false)
+    private Set<String> permissions;
 
     /** 子菜单 */
+    @TableField(exist = false)
     private List<SysRole> children = new ArrayList<>();
 
 }

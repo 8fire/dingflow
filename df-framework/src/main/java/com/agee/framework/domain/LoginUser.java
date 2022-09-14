@@ -1,39 +1,25 @@
-package com.agee.system.domain;
+package com.agee.framework.domain;
 
-import com.agee.common.core.constant.Constants;
-import com.agee.common.core.domain.BaseEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
- * 用户对象 sys_user
- * 
- * @author snow
+ * @author qimingjin
+ * @date 2022-09-14 11:24
+ * @Description: 登录用户
  */
 @Data
-@TableName("sys_user")
-public class SysUser extends BaseEntity {
-    private static final long serialVersionUID = 1L;
+public class LoginUser implements Serializable {
+    private static final long serialVersionUID = 4196247074285853000L;
 
-    /** 用户ID */
-    @TableId(type = IdType.AUTO)
     private Long userId;
 
     /** 部门ID */
     private Long deptId;
-
-    /** 部门父ID */
-    private Long parentId;
-
-    /** 角色ID */
-    private Long roleId;
 
     /** 登录名称 */
     private String loginName;
@@ -108,10 +94,10 @@ public class SysUser extends BaseEntity {
      * 岗位信息
      */
     private String position;
+
     /**
      * 入职时间，时间戳
      */
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hiredDate;
     /**
@@ -124,22 +110,14 @@ public class SysUser extends BaseEntity {
      */
     private String dingUserId;
 
-    @TableField(exist = false)
-    private SysDept dept;
+    /**
+     * 菜单权限
+     */
+    private Set<String> menuPermission;
 
-    @TableField(exist = false)
-    private List<SysRole> roles;
-
-    /** 角色组 */
-    @TableField(exist = false)
-    private Long[] roleIds;
-
-    /** 岗位组 */
-    @TableField(exist = false)
-    private Long[] postIds;
-
-    public boolean isAdmin() {
-        return Constants.ADMIN_ID.equals(this.userId);
-    }
+    /**
+     * 角色权限
+     */
+    private Set<String> rolePermission;
 
 }

@@ -100,4 +100,12 @@ public class Constants {
 
     //登录类型 验证码，三方，账户密码
     public final static String LOGIN_TYPE = "login_type";
+
+    //登录用户
+    public final static String LOGIN_USER = "login_user";
+
+    /**
+     * 管理员ID
+     */
+    public final static Long ADMIN_ID = 1L;
 }

@@ -1,14 +1,13 @@
-package com.agee.common.utils;
+package com.agee.framework.service;
 
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.*;
 import cn.hutool.core.util.StrUtil;
 import com.agee.common.core.constant.Constants;
-import com.agee.common.core.domain.UserExtraEntity;
 import com.agee.common.enums.DeviceTypeEnum;
+import com.agee.framework.domain.LoginUser;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * @author qimingjin
@@ -46,21 +45,6 @@ public class SecurityUtils {
         return String.valueOf(extra);
     }
 
-    /**
-     * 获取当前登录人的昵称
-     * 如果昵称为空则返回手机号
-     * @return 昵称
-     */
-/*    public static String getLoginNickName(){
-        SaSession tokenSession = StpUtil.getTokenSession();
-        if(ObjectUtils.isEmpty(tokenSession)){
-            return null;
-        }
-        if(ObjectUtils.isEmpty(tokenSession.get(SecurityConstant.LOGIN_NICK_NAME))){
-            return String.valueOf(tokenSession.get(SecurityUtils.getLoginUserName()));
-        }
-        return String.valueOf(tokenSession.get(SecurityConstant.LOGIN_NICK_NAME));
-    }*/
 
     /**
      * 获取当前登录人的token值
@@ -90,15 +74,13 @@ public class SecurityUtils {
      * 登录
      * @param userId 登录用户id
      * @param deviceTypeEnum 设备类型
-     * @param tokenUserSession 用户token session
+     * @param loginUser 用户信息
      * @return 登录成功信息
      */
-    public static SaTokenInfo login(Integer userId, DeviceTypeEnum deviceTypeEnum, UserExtraEntity user){
+    public static SaTokenInfo login(Integer userId, DeviceTypeEnum deviceTypeEnum, LoginUser loginUser){
+        SaHolder.getStorage().set(Constants.LOGIN_USER, loginUser);
         SaLoginModel saLoginModel = SaLoginConfig.setDevice(deviceTypeEnum.getCode())
-                .setExtra(Constants.LOGIN_USER_NAME, user.getLoginName())
-                .setExtra(Constants.LOGIN_NICK_NAME, user.getUserName())
-                .setExtra(Constants.LOGIN_TYPE, user.getLoginType())
-                .setExtra(Constants.LOGIN_USER_TYPE, user.getUserType());
+                .setExtra(Constants.LOGIN_USER, loginUser);
         StpUtil.login(userId, saLoginModel);
         return StpUtil.getTokenInfo();
     }
