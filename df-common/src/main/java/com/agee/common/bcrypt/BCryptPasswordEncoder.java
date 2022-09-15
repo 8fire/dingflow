@@ -15,7 +15,8 @@ package com.agee.common.bcrypt;
  * limitations under the License.
  */
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.security.SecureRandom;
 import java.util.regex.Pattern;
@@ -28,9 +29,8 @@ import java.util.regex.Pattern;
  *
  * @author Dave Syer
  */
-@Slf4j
 public class BCryptPasswordEncoder {
-
+    private final Log logger = LogFactory.getLog(getClass());
     private final int strength;
     private final SecureRandom random;
     private Pattern BCRYPT_PATTERN = Pattern
@@ -75,12 +75,12 @@ public class BCryptPasswordEncoder {
 
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         if (encodedPassword == null || encodedPassword.length() == 0) {
-            log.warn("Empty encoded password");
+            logger.warn("Empty encoded password");
             return false;
         }
 
         if (!BCRYPT_PATTERN.matcher(encodedPassword).matches()) {
-            log.warn("Encoded password does not look like BCrypt");
+            logger.warn("Encoded password does not look like BCrypt");
             return false;
         }
 

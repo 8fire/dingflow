@@ -37,8 +37,7 @@ public class AuthService {
     public SaTokenInfo doLogin(String userName,String password){
         SysUser sysUser = sysUserService.selectUserByLoginName(userName);
         checkLogin(sysUser,userName,password);
-
-        //组装额外session信息
+        //赋值角色和权限
         LoginUser loginUser = BeanUtil.toBean(sysUser, LoginUser.class);
         loginUser.setRolePermission(permissionService.getRolePermission(sysUser));
         loginUser.setMenuPermission(permissionService.getMenuPermission(sysUser));
@@ -46,6 +45,23 @@ public class AuthService {
         //todo 记录登录信息
         //把登录信息交给token
         return SecurityUtils.login(sysUser.getUserId().intValue(), DeviceTypeEnum.PC, loginUser);
+    }
+
+    public void resetPwd(String oldPassword, String newPassword){
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(oldPassword, loginUser.getPassword())) {
+            log.info("@@AuthService->resetPwd修改密码时,老密码{}不正确",oldPassword);
+            throw new ServiceException(ResponseCodeEnum.ACCOUNT_OLD_PASSWORD_ERROR);
+        }
+        if(encoder.matches(newPassword, loginUser.getPassword())){
+            log.info("@@AuthService->resetPwd修改密码时,新密码与老密码相同");
+            throw new ServiceException(ResponseCodeEnum.ACCOUNT_OLD_NEW_SOME_PASSWORD_ERROR);
+        }
+        SysUser sysUser=new SysUser();
+        sysUser.setUserId(loginUser.getUserId());
+        sysUser.setPassword(encoder.encode(newPassword));
+        sysUserService.updateById(sysUser);
     }
 
     private void checkLogin(SysUser sysUser,String userName,String password){

@@ -3,7 +3,6 @@ package com.agee.framework.handler;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
-import cn.dev33.satoken.exception.SaTokenException;
 import com.agee.common.core.domain.R;
 import com.agee.common.enums.ResponseCodeEnum;
 import com.agee.common.exception.DemoModeException;
@@ -13,6 +12,8 @@ import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @program: df
@@ -24,8 +25,35 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    /**
+     * 权限码异常
+     */
+    @ExceptionHandler(NotPermissionException.class)
+    public R<?> handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',权限码校验失败'{}'", requestURI, e.getMessage());
+        log.error(e.getMessage(), e);
+        return R.fail(ResponseCodeEnum.ACCOUNT_NOT_AUTH_ERROR);
+    }
+
+    /**
+     * 角色权限异常
+     */
+    @ExceptionHandler(NotRoleException.class)
+    public R<?> handleNotRoleException(NotRoleException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',权限码校验失败'{}'", requestURI, e.getMessage());
+        log.error(e.getMessage(), e);
+        return R.fail(ResponseCodeEnum.ACCOUNT_NOT_AUTH_ERROR);
+    }
+
+    /**
+     * 认证失败
+     */
     @ExceptionHandler(NotLoginException.class)
-    public R<?> handlerNotLoginException(NotLoginException nle) {
+    public R<?> handlerNotLoginException(NotLoginException nle, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',认证失败'{}',无法访问系统资源", requestURI, nle.getMessage());
         log.error(nle.getMessage(), nle);
         // 判断场景值，定制化异常信息
         if(nle.getType().equals(NotLoginException.NOT_TOKEN)) {
@@ -42,17 +70,6 @@ public class GlobalExceptionHandler {
             return R.fail(ResponseCodeEnum.NO_LOGIN_ERROR);
         }
     }
-
-    /**
-     * 权限校验失败
-     */
-    @ExceptionHandler({NotPermissionException.class, NotRoleException.class})
-    public R<?> handleAuthorizationException(SaTokenException e) {
-        log.error(e.getMessage(), e);
-        return R.fail(ResponseCodeEnum.ACCOUNT_NOT_AUTH_ERROR);
-
-    }
-
     /**
      * 请求方式不支持
      */
@@ -66,7 +83,7 @@ public class GlobalExceptionHandler {
      * 拦截未知的运行时异常
      */
     @ExceptionHandler(RuntimeException.class)
-    public R<?> notFount(RuntimeException e) {
+    public R<?> handleRuntimeException(RuntimeException e) {
         log.error("运行时异常:", e);
         return R.fail("运行时异常:" + e.getMessage());
     }
@@ -84,16 +101,16 @@ public class GlobalExceptionHandler {
      * 业务异常
      */
     @ExceptionHandler(ServiceException.class)
-    public R<?> businessException(ServiceException e) {
+    public R<?> handleServiceException(ServiceException e) {
         log.error(e.getMessage(), e);
-        return R.fail(e.getCode(),e.getMessage());
+        return R.fail(e.getCode().intValue(),e.getMessage());
     }
 
     /**
      * 自定义验证异常
      */
     @ExceptionHandler(BindException.class)
-    public R<?> validatedBindException(BindException e) {
+    public R<?> handleValidatedBindException(BindException e) {
         log.error(e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
         return R.fail(message);
@@ -103,7 +120,7 @@ public class GlobalExceptionHandler {
      * 演示模式异常
      */
     @ExceptionHandler(DemoModeException.class)
-    public R<?> demoModeException(DemoModeException e) {
+    public R<?> handleDemoModeException(DemoModeException e) {
         return R.fail("演示模式，不允许操作");
     }
 }

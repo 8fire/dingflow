@@ -29,7 +29,13 @@ public enum ResponseCodeEnum {
 
     ACCOUNT_DISABLED_ERROR(10010,"该账户已被禁用，请联系管理员"),
 
-    ACCOUNT_NOT_AUTH_ERROR(11000,"账户权限不足"),
+    ACCOUNT_OLD_PASSWORD_ERROR(10011,"老密码不正确"),
+
+    ACCOUNT_OLD_NEW_SOME_PASSWORD_ERROR(10012,"新密码不能与老密码相同"),
+
+    ACCOUNT_NOT_AUTH_ERROR(11000,"没有访问权限，请联系管理员授权"),
+
+
 
 
     SERVER_FAIL(99999, "服务器开小差了，请稍后再试");

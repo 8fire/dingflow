@@ -3,6 +3,7 @@ package com.agee.common.core.domain;
 
 
 import com.agee.common.core.constant.Constants;
+import com.agee.common.enums.ResponseCodeEnum;
 
 import java.io.Serializable;
 
@@ -27,12 +28,12 @@ public class R<T> implements Serializable {
 
     public static <T> R<T> ok()
     {
-        return restResult(null, SUCCESS, null);
+        return restResult(null, SUCCESS, "调用API成功");
     }
 
     public static <T> R<T> ok(T data)
     {
-        return restResult(data, SUCCESS, null);
+        return restResult(data, SUCCESS, "调用API成功");
     }
 
     public static <T> R<T> ok(T data, String msg)
@@ -55,6 +56,10 @@ public class R<T> implements Serializable {
         return restResult(data, FAIL, null);
     }
 
+    public static <T> R<T> fail(ResponseCodeEnum data)
+    {
+        return restResult(null, data.getCode(), data.getMessage());
+    }
     public static <T> R<T> fail(T data, String msg)
     {
         return restResult(data, FAIL, msg);

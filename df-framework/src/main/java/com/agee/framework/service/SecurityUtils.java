@@ -7,7 +7,6 @@ import cn.hutool.core.util.StrUtil;
 import com.agee.common.core.constant.Constants;
 import com.agee.common.enums.DeviceTypeEnum;
 import com.agee.framework.domain.LoginUser;
-import org.springframework.util.ObjectUtils;
 
 /**
  * @author qimingjin
@@ -34,15 +33,19 @@ public class SecurityUtils {
     }
 
     /**
-     * 获取当前登录人的账户（手机号）
-     * @return 账户（手机号）
+     * 获取当前登录人的账户
+     * @return 账户
      */
-    public static String getLoginUserName(){
-        Object extra = StpUtil.getExtra(Constants.LOGIN_USER_NAME);
-        if(ObjectUtils.isEmpty(extra)){
-            return null;
-        }
-        return String.valueOf(extra);
+    public static String getLoginName(){
+       return getLoginUser().getLoginName();
+    }
+
+    /**
+     * 获取当前登录人的名称
+     * @return 名称
+     */
+    public static String getUserName(){
+        return getLoginUser().getUserName();
     }
 
 
@@ -71,6 +74,19 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取用户
+     */
+    public static LoginUser getLoginUser() {
+        LoginUser loginUser = (LoginUser) SaHolder.getStorage().get(Constants.LOGIN_USER);
+        if (loginUser != null) {
+            return loginUser;
+        }
+        loginUser = (LoginUser) StpUtil.getTokenSession().get(Constants.LOGIN_USER);
+        SaHolder.getStorage().set(Constants.LOGIN_USER, loginUser);
+        return loginUser;
+    }
+
+    /**
      * 登录
      * @param userId 登录用户id
      * @param deviceTypeEnum 设备类型
@@ -79,10 +95,16 @@ public class SecurityUtils {
      */
     public static SaTokenInfo login(Integer userId, DeviceTypeEnum deviceTypeEnum, LoginUser loginUser){
         SaHolder.getStorage().set(Constants.LOGIN_USER, loginUser);
-        SaLoginModel saLoginModel = SaLoginConfig.setDevice(deviceTypeEnum.getCode())
-                .setExtra(Constants.LOGIN_USER, loginUser);
-        StpUtil.login(userId, saLoginModel);
+        StpUtil.login(userId, deviceTypeEnum.getCode());
+        setLoginUser(loginUser);
         return StpUtil.getTokenInfo();
+    }
+
+    /**
+     * 设置用户数据(多级缓存)
+     */
+    public static void setLoginUser(LoginUser loginUser) {
+        StpUtil.getTokenSession().set(Constants.LOGIN_USER, loginUser);
     }
 
 
