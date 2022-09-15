@@ -28,7 +28,9 @@
         <lombok.version>1.18.10</lombok.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <so-token.version>1.31.0</so-token.version>
+        <commons-pool2.version>2.11.1</commons-pool2.version>
         <knife4j.version>2.0.9</knife4j.version>
+        <redisson.version>3.17.6</redisson.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -97,6 +99,20 @@
                 <version>${so-token.version}</version>
             </dependency>
 
+            <!-- Sa-Token 整合Redis (使用jackson序列化方式) -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dao-redis-jackson</artifactId>
+                <version>${so-token.version}</version>
+            </dependency>
+
+            <!-- 提供Redis连接池 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+
             <!--Knife4j的官方start包-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
@@ -125,7 +141,12 @@
                 <version>${ding-flow.version}</version>
             </dependency>
 
-
+            <!--redisson-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

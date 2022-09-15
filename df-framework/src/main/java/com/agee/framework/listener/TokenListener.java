@@ -2,8 +2,13 @@ package com.agee.framework.listener;
 
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.hutool.extra.servlet.ServletUtil;
+import com.agee.common.utils.ServletUtils;
+import com.agee.system.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * @author qimingjin
@@ -16,6 +21,7 @@ public class TokenListener implements SaTokenListener {
     /** 每次登录时触发 */
     @Override
     public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+
         System.out.println("---------- 自定义侦听器实现 doLogin");
     }
 

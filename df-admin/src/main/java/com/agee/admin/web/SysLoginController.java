@@ -1,7 +1,7 @@
 package com.agee.admin.web;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
-import com.agee.admin.model.dto.Login;
+import com.agee.common.core.domain.Login;
 import com.agee.common.core.domain.R;
 import com.agee.framework.service.AuthService;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
