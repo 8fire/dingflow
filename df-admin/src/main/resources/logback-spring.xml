@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="spring.application.name" value="ding-flow" />
+	<property name="log.path" value="/var/log/df" />
+	<property name="log.level.console" value="INFO" />
+	<property name="log.level.controller" value="INFO" />
+	<property name="log.level.service" value="INFO" />
+	<property name="log.level.dao" value="DEBUG" />
+	<springProperty scope="context" name="spring.profiles.active" source="spring.profiles.active"/>
+	<springProperty scope="context" name="server.port" source="server.port" defaultValue="80"/>
+	<!-- 彩色日志 -->
+	<!-- 彩色日志依赖的渲染类 -->
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+	<!-- 彩色日志格式 -->
+	<property name="common-pattern-color" value="[${spring.application.name}:${server.port}] %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint}:%clr([%5p]){blue} %clr([${PID}]){magenta} %clr([%X{trace}]){yellow} %clr([%t:%r]){orange} %clr([%logger{50}.%M:%L]){cyan} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
+	<property name="common-pattern" value="[${spring.application.name}:${server.port}] %d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] ${PID} [%X{trace}] [%t:%r] [%logger{50}.%M:%L] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
+	<contextName>df-logback</contextName>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+	<jmxConfigurator/>
+
+
+	<!-- 控制台实时输出，采用高亮语法，用于开发环境 -->
+	<appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<!--<level>${log.level.console}</level>-->
+		</filter>
+		<encoder>
+			<pattern>${common-pattern-color}</pattern>
+		</encoder>
+	</appender>
+	<!-- 控制台异步实时输出 -->
+	<appender name="ASYNC_CONSOLE_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>256</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="CONSOLE_APPENDER"/>
+	</appender>
+
+	<!-- 整个项目的所有日志， 包括第三方包 -->
+	<appender name="ROOT_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/${spring.application.name}/root-${HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- 每天一归档 -->
+			<fileNamePattern>
+				${log.path}/${spring.application.name}/root-${HOSTNAME}-%d{yyyy-MM-dd}-%i.log.gz
+			</fileNamePattern>
+			<!-- 单个日志文件最多 128MB,如果超过128则切割当天加序号的.gz文件,60天的日志周期，最大不能超过20GB -->
+			<maxFileSize>128MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${common-pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_ROOT_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="ROOT_APPENDER"/>
+	</appender>
+
+	<!-- 整个项目com.xiaofeng.admin包下的的所有日志， 不包括第三方包 -->
+	<appender name="PROJECT_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/${spring.application.name}/project-${HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- 每天一归档 -->
+			<fileNamePattern>
+				${log.path}/${spring.application.name}/project-${HOSTNAME}-%d{yyyy-MM-dd}-%i.log.gz
+			</fileNamePattern>
+			<!-- 单个日志文件最多 128MB, 60天的日志周期，最大不能超过20GB -->
+			<maxFileSize>128MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${common-pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_PROJECT_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="PROJECT_APPENDER"/>
+	</appender>
+
+
+	<!-- service包的日志 -->
+	<appender name="SERVICE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/${spring.application.name}/service-${HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>
+				${log.path}/${spring.application.name}/service-${HOSTNAME}-%d{yyyy-MM-dd}-%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>128MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${common-pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_SERVICE_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="SERVICE_APPENDER"/>
+	</appender>
+
+
+
+	<!-- controller 包的日志 -->
+	<appender name="CONTROLLER_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/${spring.application.name}/controller-${HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>
+				${log.path}/${spring.application.name}/controller-${HOSTNAME}-%d{yyyy-MM-dd}-%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>128MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${common-pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_CONTROLLER_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="CONTROLLER_APPENDER"/>
+	</appender>
+
+
+	<!-- 共用异常包的日志 -->
+	<appender name="EXCEPTION_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/${spring.application.name}/exception-${HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>
+				${log.path}/${spring.application.name}/exception-${HOSTNAME}-%d{yyyy-MM-dd}-%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>128MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<totalSizeCap>20GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${common-pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_EXCEPTION_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<appender-ref ref="EXCEPTION_APPENDER"/>
+	</appender>
+
+
+	<springProfile name="prd">
+		<root level="${log.level.console}">
+			<appender-ref ref="ASYNC_ROOT_APPENDER"/>
+			<appender-ref ref="ASYNC_CONSOLE_APPENDER"/>
+		</root>
+		<logger name="com.agee" additivity="true" level="${log.level.console}">
+			<appender-ref ref="ASYNC_PROJECT_APPENDER"/>
+		</logger>
+		<logger name="com.agee.framework.handler" additivity="true" level="${log.level.console}">
+			<appender-ref ref="ASYNC_EXCEPTION_APPENDER"/>
+		</logger>
+		<logger name="com.agee.admin.web" additivity="true" level="${log.level.controller}">
+			<appender-ref ref="ASYNC_CONTROLLER_APPENDER"/>
+		</logger>
+		<logger name="com.agee.system.service" additivity="true" level="${log.level.service}">
+			<appender-ref ref="ASYNC_SERVICE_APPENDER"/>
+		</logger>
+	</springProfile>
+
+	<springProfile name="local,dev,test">
+		<root level="${log.level.console}">
+			<appender-ref ref="CONSOLE_APPENDER"/>
+			<appender-ref ref="ROOT_APPENDER"/>
+		</root>
+		<logger name="com.agee" additivity="true" level="${log.level.console}">
+			<appender-ref ref="PROJECT_APPENDER"/>
+		</logger>
+		<logger name="com.agee.framework.handler" additivity="true" level="${log.level.console}">
+			<appender-ref ref="EXCEPTION_APPENDER"/>
+		</logger>
+		<logger name="com.agee.admin.web" additivity="true" level="${log.level.controller}">
+			<appender-ref ref="CONTROLLER_APPENDER"/>
+		</logger>
+		<logger name="com.agee.system.service" additivity="true" level="${log.level.service}">
+			<appender-ref ref="SERVICE_APPENDER"/>
+		</logger>
+	</springProfile>
+
+</configuration>
