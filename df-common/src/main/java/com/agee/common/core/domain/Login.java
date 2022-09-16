@@ -25,4 +25,12 @@ public class Login implements Serializable {
     @ApiModelProperty(value = "密码")
     @NotBlank(message = "密码不能为空")
     private String password;
+
+    @ApiModelProperty(value = "验证码Id(获取验证码的时候返回的)")
+    private String captchaId;
+
+    @ApiModelProperty(value = "验证码")
+    private String code;
+
+
 }

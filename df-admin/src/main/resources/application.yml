@@ -10,6 +10,21 @@ df:
   demoEnabled: true
   # 获取ip地址开关
   addressEnabled: true
+   # 缓存懒加载
+  cacheLazy: false
+
+
+captcha:
+  #验证码开关
+  enabled: true
+  # 验证码类型 math 数组计算 char 字符验证
+  type: MATH
+  # line 线段干扰 circle 圆圈干扰 shear 扭曲干扰
+  category: CIRCLE
+  # 数字验证码位数
+  numberLength: 1
+  # 字符验证码长度
+  charLength: 4
 
 # 开发环境配置
 server:

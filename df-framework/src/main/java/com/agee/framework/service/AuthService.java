@@ -3,25 +3,25 @@ package com.agee.framework.service;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.agee.common.bcrypt.BCryptPasswordEncoder;
+import com.agee.common.core.constant.CacheConstants;
 import com.agee.common.core.constant.Constants;
 import com.agee.common.enums.DeviceTypeEnum;
 import com.agee.common.enums.EnableDisableStatusEnum;
 import com.agee.common.enums.ResponseCodeEnum;
 import com.agee.common.exception.ServiceException;
+import com.agee.common.utils.RedisUtils;
 import com.agee.common.utils.ServletUtils;
+import com.agee.framework.config.CaptchaProperties;
 import com.agee.framework.domain.LoginUser;
 import com.agee.system.domain.SysUser;
 import com.agee.system.service.SysLogininforService;
-import com.agee.system.service.SysMenuService;
-import com.agee.system.service.SysRoleService;
 import com.agee.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.misc.MessageUtils;
 
 import java.util.Date;
 
@@ -42,8 +42,15 @@ public class AuthService {
 
     private final SysLogininforService logininforService;
 
+    private final CaptchaProperties captchaProperties;
 
-    public SaTokenInfo doLogin(String userName,String password){
+
+    public SaTokenInfo doLogin(String userName,String password,String code,String captchaId){
+        boolean captchaEnabled = captchaProperties.isEnabled();
+        // 验证码开关
+        if (captchaEnabled) {
+            validateCaptcha(userName, code, captchaId);
+        }
         SysUser sysUser = sysUserService.selectUserByLoginName(userName);
         checkLogin(sysUser,userName,password);
         //赋值角色和权限
@@ -76,10 +83,25 @@ public class AuthService {
     }
 
 
+    public void validateCaptcha(String username, String code, String uuid) {
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StrUtil.nullToDefault(uuid, "");
+        String captcha = RedisUtils.getCacheObject(verifyKey);
+        RedisUtils.deleteObject(verifyKey);
+        if (captcha == null) {
+            logininforService.recordLogininfor(username, Constants.LOGIN_FAIL, "验证码已过期", ServletUtils.getRequest());
+            log.info("@@AuthService->validateCaptcha验证码已过期");
+            throw new ServiceException(ResponseCodeEnum.ACCOUNT_CAPTCHA_EXPIRE_ERROR);
+        }
+        if (!code.equalsIgnoreCase(captcha)) {
+            log.info("@@AuthService->validateCaptcha验证码不正确");
+            logininforService.recordLogininfor(username, Constants.LOGIN_FAIL, "验证码不正确", ServletUtils.getRequest());
+            throw new ServiceException(ResponseCodeEnum.ACCOUNT_CAPTCHA_ERROR);
+        }
+    }
     /**
      * 记录登录信息
      */
-    public void recordLoginInfo(Long userId, String username) {
+    private void recordLoginInfo(Long userId, String username) {
         SysUser sysUser = new SysUser();
         sysUser.setUserId(userId);
         sysUser.setLoginIp(ServletUtil.getClientIP(ServletUtils.getRequest()));

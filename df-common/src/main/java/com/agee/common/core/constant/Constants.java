@@ -108,4 +108,9 @@ public class Constants {
      * 管理员ID
      */
     public final static Long ADMIN_ID = 1L;
+
+    /**
+     * 验证码有效期（分钟）
+     */
+    public final static Integer CAPTCHA_EXPIRATION = 2;
 }

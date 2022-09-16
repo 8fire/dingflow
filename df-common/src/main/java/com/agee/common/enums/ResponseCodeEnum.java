@@ -33,6 +33,10 @@ public enum ResponseCodeEnum {
 
     ACCOUNT_OLD_NEW_SOME_PASSWORD_ERROR(10012,"新密码不能与老密码相同"),
 
+    ACCOUNT_CAPTCHA_EXPIRE_ERROR(10013,"验证码已过期"),
+
+    ACCOUNT_CAPTCHA_ERROR(10014,"验证码不正确"),
+
     ACCOUNT_NOT_AUTH_ERROR(11000,"没有访问权限，请联系管理员授权"),
 
 

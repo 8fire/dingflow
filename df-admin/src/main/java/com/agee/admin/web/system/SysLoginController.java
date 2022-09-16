@@ -1,4 +1,4 @@
-package com.agee.admin.web;
+package com.agee.admin.web.system;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.agee.common.core.domain.Login;
@@ -35,7 +35,7 @@ public class SysLoginController {
     @ApiOperation(value = "登录接口",notes = "该接口系统用户登录")
     @PostMapping("/doLogin")
     public R<SaTokenInfo> doLogin(@Valid @RequestBody Login login){
-        return R.ok(authService.doLogin(login.getUserName(),login.getPassword()));
+        return R.ok(authService.doLogin(login.getUserName(),login.getPassword(),login.getCode(),login.getCaptchaId()));
     }
 
     @ApiOperation(value = "重置密码", notes = "该接口用户重置用户密码")

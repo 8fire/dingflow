@@ -19,17 +19,17 @@ public enum CaptchaCategoryEnum {
     /**
      * 线段干扰
      */
-    LINE(LineCaptcha .class),
+    LINE(LineCaptcha.class),
 
     /**
      * 圆圈干扰
      */
-    CIRCLE(CircleCaptcha .class),
+    CIRCLE(CircleCaptcha.class),
 
     /**
      * 扭曲干扰
      */
-    SHEAR(ShearCaptcha .class);
+    SHEAR(ShearCaptcha.class);
 
     private final Class<? extends AbstractCaptcha> clazz;
 }
