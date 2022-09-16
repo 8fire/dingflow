@@ -1,4 +1,4 @@
-package com.agee.common.config;
+package com.agee.framework.config;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;

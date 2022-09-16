@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
@@ -35,14 +36,15 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @RestController
 @ApiSort(2)
-@Api(value = "验证码服务")
+@Api(tags = "验证码服务")
+@RequestMapping("/captcha")
 public class CaptchaController {
 
     private final CaptchaProperties captchaProperties;
 
     @ApiOperation(value = "生成验证码",notes = "该接口用于生成验证码")
-    @GetMapping("/captchaImage")
-    public R<CaptchaEntity> getCode() {
+    @GetMapping("/createCaptchaImage")
+    public R<CaptchaEntity> createCaptchaImage() {
         CaptchaEntity captchaEntity=new CaptchaEntity();
         boolean captchaEnabled = captchaProperties.isEnabled();
         captchaEntity.setCaptchaEnabled(captchaEnabled);

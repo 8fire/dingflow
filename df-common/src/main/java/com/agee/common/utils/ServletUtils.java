@@ -169,4 +169,11 @@ public class ServletUtils extends ServletUtil
     public static String getClientIP() {
         return getClientIP(getRequest());
     }
+
+    /**
+     * 获取Boolean参数
+     */
+    public static Boolean getParameterToBool(String name) {
+        return Convert.toBool(getRequest().getParameter(name));
+    }
 }

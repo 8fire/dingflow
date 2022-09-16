@@ -16,7 +16,7 @@ df:
 
 captcha:
   #验证码开关
-  enabled: true
+  enabled: false
   # 验证码类型 math 数组计算 char 字符验证
   type: MATH
   # line 线段干扰 circle 圆圈干扰 shear 扭曲干扰
@@ -54,6 +54,9 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
+  main:
+    allow-circular-references: true
+
 mybatis-plus:
   # 搜索指定包别名
   typeAliasesPackage: com.agee.**.domain
@@ -62,9 +65,18 @@ mybatis-plus:
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 加载全局的配置文件
  # configLocation: classpath:mybatis/mybatis-config.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #全局配置
   global-config:
     db-config:
       #逻辑删除
       logic-delete-value: 1
       logic-not-delete-value: 0
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

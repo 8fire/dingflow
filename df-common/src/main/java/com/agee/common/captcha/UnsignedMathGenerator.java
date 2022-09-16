@@ -9,8 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 无符号计算生成器
- *
- * @author Lion Li
  */
 public class UnsignedMathGenerator implements CodeGenerator {
 

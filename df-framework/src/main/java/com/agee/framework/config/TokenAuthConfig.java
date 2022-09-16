@@ -46,7 +46,7 @@ public class TokenAuthConfig implements StpInterface,WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //不需要登录的
         List<String> notLogin= CollUtil.newArrayList(
-                "/auth/doLogin",
+                "/auth/doLogin","/captcha/createCaptchaImage",
                 "/swagger-ui.html",
                 "/swagger/**","/webjars/**",
                 "/swagger-resources/**",

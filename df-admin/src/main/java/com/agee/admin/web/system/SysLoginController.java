@@ -8,8 +8,8 @@ import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +27,10 @@ import javax.validation.Valid;
 @Api(tags = "登录鉴权服务")
 @Slf4j
 @ApiSort(1)
+@RequiredArgsConstructor
 public class SysLoginController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     @ApiOperation(value = "登录接口",notes = "该接口系统用户登录")
     @PostMapping("/doLogin")

@@ -1,6 +1,5 @@
 package com.agee.common.utils;
 
-import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import com.agee.common.config.DingFlowConfig;

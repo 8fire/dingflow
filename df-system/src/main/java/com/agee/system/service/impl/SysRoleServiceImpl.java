@@ -4,7 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import com.agee.system.domain.SysRole;
 import com.agee.system.mapper.SysRoleMapper;
 import com.agee.system.service.SysRoleService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
+    @Override
+    public List<SysRole> selectRoleList(SysRole role) {
+        List<SysRole> sysRoles = sysRoleMapper.selectList(Wrappers.<SysRole>lambdaQuery().eq(SysRole::getStatus,0));
+        return sysRoles;
+    }
 
     @Override
     public Set<String> selectRolePermissionByUserId(Long userId) {
