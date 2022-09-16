@@ -18,7 +18,7 @@ public class Constants {
     /**
      * token 名称
      */
-    public static final String DF_USER_TOKEN = "DF-USER-TOKEN";
+    public static final String DF_USER_TOKEN = "X-DF-USER-TOKEN";
 
     /**
      * http请求
@@ -70,15 +70,6 @@ public class Constants {
      */
     public static final String LOGIN_FAIL = "Error";
 
-    /**
-     * 当前记录起始索引
-     */
-    public static final String PAGE_NUM = "pageNum";
-
-    /**
-     * 每页显示记录数
-     */
-    public static final String PAGE_SIZE = "pageSize";
 
     /**
      * 排序列
@@ -90,13 +81,6 @@ public class Constants {
      */
     public static final String IS_ASC = "isAsc";
 
-
-    public final static String LOGIN_USER_NAME = "login_user_name";
-
-
-    public final static String LOGIN_NICK_NAME = "login_nick_name";
-
-    public final static String LOGIN_USER_TYPE = "user_type";
 
     //登录类型 验证码，三方，账户密码
     public final static String LOGIN_TYPE = "login_type";

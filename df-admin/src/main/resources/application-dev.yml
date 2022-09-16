@@ -1,18 +1,21 @@
 
+#接口文档配置
 knife4j:
     enable: true
     production: false
     setting:
+        language: zh-CN
+        enableSwaggerModels: true
         enableDocumentManage: true
         swaggerModelName: DingFlow全局实体对象
+        enableFooter: false
         enableFooterCustom: true
         footerCustomContent: 启明文化网络信息技术有限公司
-        enableFooter: false
     documents:
         -
-          group: 全部接口
+          group: V1.0.0
           name: 项目文档
-          locations: classpath:markdown/*.md
+          locations: classpath:markdown/project.md
 
 # 数据源配置
 spring:

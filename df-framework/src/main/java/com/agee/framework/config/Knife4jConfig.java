@@ -1,5 +1,7 @@
 package com.agee.framework.config;
 
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -35,22 +37,31 @@ import java.util.List;
 @EnableSwagger2WebMvc
 public class Knife4jConfig {
 
+    private final OpenApiExtensionResolver openApiExtensionResolver;
+
+    @Autowired
+    public Knife4jConfig(OpenApiExtensionResolver openApiExtensionResolver) {
+        this.openApiExtensionResolver = openApiExtensionResolver;
+    }
+
     @Bean
     public Docket allApiDocket(){
+        String groupName="V1.0.0";
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("全部接口")
                 .apiInfo(dfApiInfo())
+                .groupName(groupName)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.agee.admin.web"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .extensions(openApiExtensionResolver.buildExtensions(groupName));
     }
 
     private ApiInfo dfApiInfo(){
         return new ApiInfoBuilder()
-                .title("DingFlow API")
+                .title("DingFlow 接口文档")
                 .description("DingFlow相关接口API")
-                .contact(new Contact("Snow社区","","qimingjin@126.com"))
+                .contact(new Contact("Snow社区","https://www.dingflow.yifaoa.top/docs/#","qimingjin@126.com"))
                 .version("V1.0.0")
                 .build();
     }

@@ -63,8 +63,6 @@ mybatis-plus:
   typeHandlersPackage: com.agee.system.handler
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # 加载全局的配置文件
- # configLocation: classpath:mybatis/mybatis-config.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #全局配置
