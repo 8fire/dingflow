@@ -60,17 +60,7 @@ public class BCryptPasswordEncoder {
     }
 
     public String encode(CharSequence rawPassword) {
-        String salt;
-        if (strength > 0) {
-            if (random != null) {
-                salt = BCrypt.gensalt(strength, random);
-            } else {
-                salt = BCrypt.gensalt(strength);
-            }
-        } else {
-            salt = BCrypt.gensalt();
-        }
-        return BCrypt.hashpw(rawPassword.toString(), salt);
+        return BCrypt.hashpw(rawPassword.toString(), getSalt());
     }
 
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
@@ -85,5 +75,19 @@ public class BCryptPasswordEncoder {
         }
 
         return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
+    }
+
+    public String getSalt(){
+        String salt;
+        if (strength > 0) {
+            if (random != null) {
+                salt = BCrypt.gensalt(strength, random);
+            } else {
+                salt = BCrypt.gensalt(strength);
+            }
+        } else {
+            salt = BCrypt.gensalt();
+        }
+        return salt;
     }
 }

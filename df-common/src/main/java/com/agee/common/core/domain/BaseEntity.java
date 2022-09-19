@@ -2,6 +2,7 @@ package com.agee.common.core.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -37,7 +38,8 @@ public class BaseEntity implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
-    /** 逻辑删除 */
+    /** 删除标识 */
+    @TableLogic
     private Integer delFlag;
 
     /** 备注 */

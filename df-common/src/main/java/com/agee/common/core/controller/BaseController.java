@@ -90,8 +90,8 @@ public class BaseController {
     /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    protected R<TableDataInfo> getDataTable(List<?> list) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    protected <T> R<TableDataInfo<T>> getDataTable(List<T> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
@@ -106,8 +106,8 @@ public class BaseController {
      * @param list
      * @return
      */
-    protected R<TableDataInfo> getFlowDataTable(PageModel<?> list) {
-        TableDataInfo rspData = new TableDataInfo();
+    protected <T> R<TableDataInfo<T>> getFlowDataTable(PageModel<T> list) {
+        TableDataInfo<T> rspData = new TableDataInfo<>();
         rspData.setRows(list.getPagedRecords());
         rspData.setTotal(list.getTotalCount());
         rspData.setPageIndex(list.getPageNo());
@@ -120,14 +120,14 @@ public class BaseController {
      *
      * @param list 分页数据
      */
-    public R<TableDataInfo> pageBySubList(List list) {
+    public <T> R<TableDataInfo<T>> pageBySubList(List<T> list) {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageIndex = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
-        TableDataInfo rspData = new TableDataInfo();
+        TableDataInfo<T> rspData = new TableDataInfo<T>();
         int totalCount = list.size();
         int pageCount = 0;
-        List<String> subList;
+        List<T> subList;
         int m = totalCount % pageSize;
         if (m > 0) {
             pageCount = totalCount / pageSize + 1;

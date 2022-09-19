@@ -3,7 +3,6 @@ package com.agee.common.core.constant;
 /**
  * 通用常量信息
  *
- * @author ruoyi
  */
 public class Constants {
     /**
@@ -32,12 +31,12 @@ public class Constants {
     public static final String HTTPS = "https://";
 
     /**
-     * 通用成功标识
+     * 成功标记
      */
     public static final Integer SUCCESS = 200;
 
     /**
-     * 通用失败标识
+     * 失败标记
      */
     public static final Integer FAIL = 500;
 
@@ -66,6 +65,17 @@ public class Constants {
      * 登录失败
      */
     public static final String LOGIN_FAIL = "Error";
+
+
+    /**
+     * 排序列
+     */
+    public static final String ORDER_BY_COLUMN = "orderByColumn";
+
+    /**
+     * 排序的方向 "desc" 或者 "asc".
+     */
+    public static final String IS_ASC = "isAsc";
 
     /**
      * 管理员ID
@@ -107,4 +117,16 @@ public class Constants {
      */
     public static final String[] JOB_ERROR_STR = {"java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
             "org.springframework", "org.apache", "com.ruoyi.common.utils.file"};
+
+    /**
+     * 系统内置状态
+     */
+    public static final Integer BUILT_IN_STATUS = 0;
+
+    /**
+     * 角色类型
+     */
+    public static final Integer SYSTEM_ROLE_TYPE = 1;
+
+    public static final Integer FLOW_ROLE_TYPE = 2;
 }
