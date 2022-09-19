@@ -3,6 +3,7 @@ package com.agee.common.core.constant;
 /**
  * 通用常量信息
  *
+ * @author ruoyi
  */
 public class Constants {
     /**
@@ -31,24 +32,20 @@ public class Constants {
     public static final String HTTPS = "https://";
 
     /**
-     * 成功标记
+     * 通用成功标识
      */
     public static final Integer SUCCESS = 200;
 
     /**
-     * 失败标记
+     * 通用失败标识
      */
     public static final Integer FAIL = 500;
 
-    /**
-     * 登录成功状态
-     */
-    public static final String LOGIN_SUCCESS_STATUS = "0";
+    //登录类型 验证码，三方，账户密码
+    public final static String LOGIN_TYPE = "login_type";
 
-    /**
-     * 登录失败状态
-     */
-    public static final String LOGIN_FAIL_STATUS = "1";
+    //登录用户
+    public final static String LOGIN_USER = "login_user";
 
     /**
      * 登录成功
@@ -70,24 +67,6 @@ public class Constants {
      */
     public static final String LOGIN_FAIL = "Error";
 
-
-    /**
-     * 排序列
-     */
-    public static final String ORDER_BY_COLUMN = "orderByColumn";
-
-    /**
-     * 排序的方向 "desc" 或者 "asc".
-     */
-    public static final String IS_ASC = "isAsc";
-
-
-    //登录类型 验证码，三方，账户密码
-    public final static String LOGIN_TYPE = "login_type";
-
-    //登录用户
-    public final static String LOGIN_USER = "login_user";
-
     /**
      * 管理员ID
      */
@@ -96,5 +75,36 @@ public class Constants {
     /**
      * 验证码有效期（分钟）
      */
-    public final static Integer CAPTCHA_EXPIRATION = 2;
+    public static final Integer CAPTCHA_EXPIRATION = 2;
+
+    /**
+     * 资源映射路径 前缀
+     */
+    public static final String RESOURCE_PREFIX = "/profile";
+
+    /**
+     * RMI 远程方法调用
+     */
+    public static final String LOOKUP_RMI = "rmi:";
+
+    /**
+     * LDAP 远程方法调用
+     */
+    public static final String LOOKUP_LDAP = "ldap:";
+
+    /**
+     * LDAPS 远程方法调用
+     */
+    public static final String LOOKUP_LDAPS = "ldaps:";
+
+    /**
+     * 定时任务白名单配置（仅允许访问的包名，如其他需要可以自行添加）
+     */
+    public static final String[] JOB_WHITELIST_STR = {"com.ruoyi"};
+
+    /**
+     * 定时任务违规的字符
+     */
+    public static final String[] JOB_ERROR_STR = {"java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
+            "org.springframework", "org.apache", "com.ruoyi.common.utils.file"};
 }

@@ -163,6 +163,7 @@
         <module>df-common</module>
         <module>df-framework</module>
         <module>df-system</module>
+        <module>df-quartz</module>
     </modules>
 
     <build>

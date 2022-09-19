@@ -41,7 +41,7 @@ public class SysLoginController {
     @ApiOperation(value = "重置密码", notes = "该接口用户重置用户密码")
     @PostMapping("/resetPwd")
     @ResponseBody
-    public R<?> resetPwd(@ApiParam(value = "老密码（经过Md5 32位小写加密）") @RequestParam(value = "oldPassword") String oldPassword,
+    public R<Void> resetPwd(@ApiParam(value = "老密码（经过Md5 32位小写加密）") @RequestParam(value = "oldPassword") String oldPassword,
                          @ApiParam(value = "新密码（经过Md5 32位小写加密）") @RequestParam(value = "newPassword")   String newPassword) {
         authService.resetPwd(oldPassword,newPassword);
         return R.ok();

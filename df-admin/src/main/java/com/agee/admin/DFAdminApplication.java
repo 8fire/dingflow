@@ -1,8 +1,10 @@
 package com.agee.admin;
 
+import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 
 /**
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan({"com.agee.*"})
+@Import({SpringUtil.class})
 public class DFAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(DFAdminApplication.class, args);

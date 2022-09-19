@@ -1,7 +1,11 @@
 package com.agee.common.core.controller;
 
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONObject;
+import com.agee.common.core.constant.Constants;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.PageDomain;
 import com.agee.common.core.page.PageModel;
@@ -35,21 +39,21 @@ public class BaseController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // Date 类型转换
-        binder.registerCustomEditor(Date.class, new PropertyEditorSupport()
-        {
+        binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
             @Override
-            public void setAsText(String text)
-            {
+            public void setAsText(String text) {
                 setValue(DateUtil.parseDate(text));
             }
         });
     }
+
     /**
      * 设置请求分页数据
      */
     protected void startPage() {
         PageUtils.startPage();
     }
+
     /**
      * 设置请求排序数据
      */
@@ -64,24 +68,21 @@ public class BaseController {
     /**
      * 清理分页的线程变量
      */
-    protected void clearPage()
-    {
+    protected void clearPage() {
         PageUtils.clearPage();
     }
 
     /**
      * 获取request
      */
-    public HttpServletRequest getRequest()
-    {
+    public HttpServletRequest getRequest() {
         return ServletUtils.getRequest();
     }
 
     /**
      * 获取response
      */
-    public HttpServletResponse getResponse()
-    {
+    public HttpServletResponse getResponse() {
         return ServletUtils.getResponse();
     }
 
@@ -89,7 +90,7 @@ public class BaseController {
     /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected R<TableDataInfo> getDataTable(List<?> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setRows(list);
@@ -101,6 +102,7 @@ public class BaseController {
 
     /**
      * flowable的分页
+     *
      * @param list
      * @return
      */
@@ -115,6 +117,7 @@ public class BaseController {
 
     /**
      * 利用subList方法进行分页
+     *
      * @param list 分页数据
      */
     public R<TableDataInfo> pageBySubList(List list) {
@@ -145,5 +148,13 @@ public class BaseController {
         rspData.setPageIndex(pageIndex);
         rspData.setPageSize(pageSize);
         return R.ok(rspData);
+    }
+
+    /**
+     * 获取登录用户id
+     */
+    public String getUsername() {
+        JSONObject loginUser = (JSONObject) SaHolder.getStorage().get(Constants.LOGIN_USER);
+        return loginUser.getStr("userName");
     }
 }
