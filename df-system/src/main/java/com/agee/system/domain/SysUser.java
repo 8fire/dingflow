@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,59 +23,58 @@ import java.util.List;
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /** 用户ID */
     @TableId(type = IdType.AUTO)
+    @ApiModelProperty(value = "用户id")
     private Long userId;
 
-    /** 部门ID */
+    @ApiModelProperty(value = "部门ID")
     private Long deptId;
 
-    /** 部门父ID */
-    private Long parentId;
 
-    /** 角色ID */
-    private Long roleId;
 
-    /** 登录名称 */
+    @ApiModelProperty(value = "登录名称")
     private String loginName;
 
-    /** 用户名称 */
+    @ApiModelProperty(value = "用户名称")
     private String userName;
 
-    /** 用户类型 */
+    @ApiModelProperty(value = "用户类型")
     private String userType;
 
-    /** 用户邮箱 */
+    @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 手机号码 */
+    @ApiModelProperty(value = "手机号码")
     private String phonenumber;
 
-    /** 用户性别 */
+    @ApiModelProperty(value = "用户性别")
     private String sex;
 
-    /** 用户头像 */
+    @ApiModelProperty(value = "用户头像")
     private String avatar;
 
-    /** 密码 */
+    @ApiModelProperty(value = "密码")
     private String password;
 
     /** 盐加密 */
+    @ApiModelProperty(hidden = true)
     private String salt;
 
-    /** 帐号状态（0正常 1停用） */
+    @ApiModelProperty(value = "帐号状态（'0'-正常 '1'-停用）")
     private String status;
 
-    /** 删除标志（0代表存在 2代表删除） */
-    private String delFlag;
+    /** 删除标志（0代表存在 1代表删除） */
+    @ApiModelProperty(hidden = true)
+    private Integer delFlag;
 
     /** 最后登陆IP */
+    @ApiModelProperty(hidden = true)
     private String loginIp;
 
-    /** 最后登陆时间 */
+    @ApiModelProperty(value = "最后登陆时间")
     private Date loginDate;
 
-    /** 密码最后更新时间 */
+    @ApiModelProperty(value = "密码最后更新时间")
     private Date pwdUpdateDate;
 
     /**
@@ -82,47 +82,41 @@ public class SysUser extends BaseEntity {
      * true：开启。开启后，手机号码对所有员工隐藏。普通员工无法对其发DING、发起钉钉免费商务电话。高管之间不受影响。
      * false：不开启。
      */
+    @ApiModelProperty(value = "是否开启高管模式")
     private Boolean isSenior;
 
     /**
-     * 	是否号码隐藏：
-     * true：隐藏隐藏手机号后，手机号在个人资料页隐藏，但仍可对其发DING、发起钉钉免费商务电话。
-     * false：不隐藏
-     */
-    private Boolean isHide;
-    /**
      * 	员工工号，对应显示到OA后台和客户端个人资料的工号栏目。长度为0~64个字符。
      */
+    @ApiModelProperty(value = "员工工号")
     private String jobnumber;
 
     /**
      * 	办公地点。长度为0~50个字符。
      */
+    @ApiModelProperty(value = "办公地点")
     private String workPlace;
 
     /**
      * 分机号
      */
+    @ApiModelProperty(value = "分机号")
     private String tel;
-    /**
-     * 岗位信息
-     */
-    private String position;
-    /**
-     * 入职时间，时间戳
-     */
+
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(value = "入职时间")
     private Date hiredDate;
-    /**
-     * 组织邮箱
-     */
+
+    @ApiModelProperty(value = "组织邮箱,暂时没用")
     private String orgEmail;
 
-    /**
-     * 钉钉用户ID
-     */
+
+    @ApiModelProperty(value = "钉钉用户id")
     private String dingUserId;
+
+    @TableField(exist = false)
+    private String deptName;
 
     @TableField(exist = false)
     private SysDept dept;

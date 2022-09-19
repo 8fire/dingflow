@@ -35,6 +35,14 @@ public interface SysRoleService extends IService<SysRole> {
      */
     void updateRole(SysRole role);
 
+    /**
+     * 批量删除角色信息
+     *
+     * @param roleIds 需要删除的角色ID
+     * @return 结果
+     */
+    int deleteRoleByIds(Long[] roleIds);
+
 
     /**
      * 根据用户ID查询角色权限

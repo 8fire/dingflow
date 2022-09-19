@@ -97,4 +97,15 @@ public class Constants {
      * 验证码有效期（分钟）
      */
     public final static Integer CAPTCHA_EXPIRATION = 2;
+
+    /**
+     * 系统内置状态
+     */
+    public static final Integer BUILT_IN_STATUS = 0;
+
+    /**
+     * 角色类型
+     */
+    public static final Integer SYSTEM_ROLE_TYPE = 1;
+    public static final Integer FLOW_ROLE_TYPE = 2;
 }

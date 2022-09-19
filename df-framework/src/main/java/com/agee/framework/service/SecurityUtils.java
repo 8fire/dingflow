@@ -2,11 +2,16 @@ package com.agee.framework.service;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.stp.*;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
+import com.agee.common.bcrypt.BCryptPasswordEncoder;
 import com.agee.common.core.constant.Constants;
 import com.agee.common.enums.DeviceTypeEnum;
 import com.agee.framework.domain.LoginUser;
+import sun.security.provider.MD5;
 
 /**
  * @author qimingjin
@@ -129,5 +134,15 @@ public class SecurityUtils {
             throw NotLoginException.newInstance(StpUtil.TYPE, NotLoginException.KICK_OUT, tokenValue);
         }
         return loginIdNotHandle;
+    }
+
+    /**
+     * 密码加密
+     * @param plaintext 明文
+     * @return 密文
+     */
+    public static String encryptPassword(String plaintext){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(SecureUtil.md5(plaintext));
     }
 }

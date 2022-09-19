@@ -23,6 +23,9 @@ public class SysRole extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long roleId;
 
+    /**
+     * 父节点
+     */
     private Long parentId;
 
     /** 角色名称 */
@@ -48,8 +51,13 @@ public class SysRole extends BaseEntity {
      */
     private Integer roleType;
 
+    /**
+     * 是否内置角色（0-内置，1-不）
+     */
+    private Integer builtIn;
+
     /** 删除标志（0代表存在 2代表删除） */
-    private String delFlag;
+    private Integer delFlag;
 
     /** 用户是否存在此角色标识 默认不存在 */
     @TableField(exist = false)

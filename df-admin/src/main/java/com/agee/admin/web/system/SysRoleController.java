@@ -2,6 +2,7 @@ package com.agee.admin.web.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.agee.common.annotation.Log;
+import com.agee.common.core.constant.Constants;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;
@@ -40,6 +41,7 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "分页查询角色列表",notes = "该接口用于分页获取角色列表信息")
     public R<TableDataInfo<SysRole>> list(@RequestBody SysRole role) {
         startPage();
+        role.setRoleType(Constants.SYSTEM_ROLE_TYPE);
         List<SysRole> list = roleService.selectPageRoleList(role);
         return getDataTable(list);
     }
@@ -48,6 +50,7 @@ public class SysRoleController extends BaseController {
     @SaCheckPermission("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增角色",notes = "该接口用于新增角色信息")
+    @Idempotent
     @PostMapping
     public R<Long> add(@Validated @RequestBody SysRole role) {
         return R.ok(roleService.insertRole(role));
@@ -55,14 +58,21 @@ public class SysRoleController extends BaseController {
 
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @Idempotent
     @PutMapping
     public R<?> edit(@Validated @RequestBody SysRole role) {
         roleService.updateRole(role);
         return R.ok();
     }
 
+    @SaCheckPermission("system:role:remove")
+    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{roleIds}")
+    public R<Integer> remove(@PathVariable Long[] roleIds) {
+        return R.ok(roleService.deleteRoleByIds(roleIds));
+    }
+
     @GetMapping("/getRoleById")
-    @Idempotent
     public R<SysRole> getRoleById(@RequestParam(value = "id") Integer id) {
         SysRole list = roleService.getById(id);
         return R.ok(list);

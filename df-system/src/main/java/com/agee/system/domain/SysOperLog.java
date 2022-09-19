@@ -1,11 +1,13 @@
 package com.agee.system.domain;
 
-import com.agee.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 操作日志记录表 oper_log
@@ -13,7 +15,7 @@ import java.util.Date;
  * @author snow
  */
 @Data
-public class SysOperLog extends BaseEntity {
+public class SysOperLog  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 日志主键 */
@@ -65,4 +67,7 @@ public class SysOperLog extends BaseEntity {
     /** 操作时间 */
     private Date operTime;
 
+    /** 请求参数 */
+    @TableField(exist = false)
+    private Map<String, Object> params;
 }
