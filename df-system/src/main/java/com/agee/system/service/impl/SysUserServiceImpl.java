@@ -104,13 +104,47 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
         return sysUserMapper.selectUserByLoginName(userName);
     }
 
+    @Override
+    public int deleteUserById(Long userId) {
+        // 删除用户与角色关联
+        sysUserRoleMapper.deleteUserRoleByUserId(userId);
+        //todo 删除用户与岗位表
+       // userPostMapper.deleteUserPostByUserId(userId);
+        return baseMapper.deleteUserById(userId);
+    }
+
+    @Override
+    public int deleteUserByIds(Long[] userIds) {
+        for (Long userId : userIds) {
+            checkUserAllowed(new SysUser(userId));
+        }
+        return baseMapper.deleteUserByIds(userIds);
+    }
+
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param user 用户信息
+     */
+    @Override
+    public void checkUserAllowed(SysUser user) {
+        if (ObjectUtil.isNotNull(user.getUserId()) && user.isAdmin()) {
+            throw new ServiceException(ResponseCodeEnum.ACCOUNT_UPDATE_SUPER_ERROR);
+        }
+    }
+
+    @Override
+    public SysUser selectUserById(Long userId) {
+        return sysUserMapper.selectUserById(userId);
+    }
 
     /**
      * 保存用户角色关系
      * @param userId 用户id
      * @param roleIds 角色集合
      */
-    private void insertUserRole(Long userId, Long[] roleIds){
+    @Override
+    public void insertUserRole(Long userId, Long[] roleIds){
         if(ArrayUtil.isEmpty(roleIds)){
             return;
         }

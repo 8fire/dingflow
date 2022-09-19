@@ -6,6 +6,7 @@ import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;
 import com.agee.common.enums.BusinessType;
+import com.agee.framework.annotation.Idempotent;
 import com.agee.framework.service.SecurityUtils;
 import com.agee.system.domain.SysUser;
 import com.agee.system.domain.req.SysUserCreateReq;
@@ -51,6 +52,7 @@ public class SysUserController extends BaseController {
     @SaCheckPermission("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
+    @Idempotent
     @ApiOperation(value = "新增用户",notes = "该接口用于新增用户信息")
     public R<Long> addSave(@Validated @RequestBody SysUserCreateReq sysUserCreateReq) {
         sysUserCreateReq.setPassword(SecurityUtils.encryptPassword(sysUserCreateReq.getPassword()));
@@ -61,10 +63,43 @@ public class SysUserController extends BaseController {
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/edit")
+    @Idempotent
     @ApiOperation(value = "编辑用户",notes = "该接口用于编辑用户信息")
     public R<Long> edit(@Validated @RequestBody SysUserUpdateReq sysUserUpdateReq) {
         sysUserUpdateReq.setUpdateBy(SecurityUtils.getLoginName());
         return R.ok(userService.editUser(sysUserUpdateReq));
     }
 
+    @SaCheckPermission("system:user:remove")
+    @Log(title = "用户管理", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @Idempotent
+    @ApiOperation(value = "删除用户",notes = "该接口用于删除用户信息")
+    public R<Integer> remove(Long[] ids) {
+       return R.ok(userService.deleteUserByIds(ids));
+    }
+
+
+    @SaCheckPermission("system:user:changeStatus")
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @GetMapping("/changeStatus")
+    @Idempotent
+    @ApiOperation(value = "编辑用户状态",notes = "该接口用于编辑用户状态信息")
+    public R<Boolean> changeStatus(@RequestParam("userId") Long userId, @RequestParam("status") String status) {
+        SysUser user = userService.selectUserById(userId);
+        userService.checkUserAllowed(user);
+        SysUser sysUser=new SysUser();
+        sysUser.setUserId(userId);
+        sysUser.setStatus(status);
+        return R.ok(userService.updateById(sysUser));
+    }
+
+    @SaCheckPermission("system:user:authRole")
+    @Log(title = "用户管理", businessType = BusinessType.GRANT)
+    @PostMapping("/authRole")
+    @ApiOperation(value = "用户角色授权",notes = "该接口用于用户角色授权信息")
+    public R<Void> insertAuthRole(Long userId, Long[] roleIds) {
+        userService.insertUserRole(userId, roleIds);
+        return R.ok();
+    }
 }

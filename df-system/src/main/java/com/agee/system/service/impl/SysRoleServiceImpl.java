@@ -1,5 +1,6 @@
 package com.agee.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -9,6 +10,8 @@ import com.agee.common.exception.ServiceException;
 import com.agee.system.domain.SysRole;
 import com.agee.system.domain.SysRoleMenu;
 import com.agee.system.domain.SysUserRole;
+import com.agee.system.domain.req.SysRoleCreateReq;
+import com.agee.system.domain.req.SysRoleUpdateReq;
 import com.agee.system.mapper.SysRoleMapper;
 import com.agee.system.mapper.SysRoleMenuMapper;
 import com.agee.system.mapper.SysUserRoleMapper;
@@ -47,13 +50,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
     }
 
     @Override
-    public Long insertRole(SysRole sysRole) {
-        if(checkRoleName(null,sysRole.getRoleName())){
+    public Long insertRole(SysRoleCreateReq sysRoleCreateReq) {
+        if(checkRoleName(null,sysRoleCreateReq.getRoleName())){
             throw new ServiceException(ResponseCodeEnum.ROLE_NAME_EXIST_ERROR);
         }
-        if(checkRoleKey(null,sysRole.getRoleKey())){
+        if(checkRoleKey(null,sysRoleCreateReq.getRoleKey())){
             throw new ServiceException(ResponseCodeEnum.ROLE_KEY_EXIST_ERROR);
         }
+        SysRole sysRole = BeanUtil.toBean(sysRoleCreateReq, SysRole.class);
         sysRoleMapper.insertRole(sysRole);
         //新增角色菜单关系
         insertRoleMenu(sysRole);
@@ -61,17 +65,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
     }
 
     @Override
-    public void updateRole(SysRole role) {
-        SysRole sysRole = sysRoleMapper.selectById(role.getRoleId());
+    public void updateRole(SysRoleUpdateReq sysRoleUpdateReq) {
+        SysRole sysRole = sysRoleMapper.selectById(sysRoleUpdateReq.getRoleId());
         if(Constants.BUILT_IN_STATUS.equals(sysRole.getBuiltIn())){
             throw new ServiceException(ResponseCodeEnum.ROLE_BUILT_IN_ERROR);
         }
-        if(checkRoleName(role.getRoleId(),role.getRoleName())){
+        if(checkRoleName(sysRoleUpdateReq.getRoleId(),sysRoleUpdateReq.getRoleName())){
             throw new ServiceException(ResponseCodeEnum.ROLE_NAME_EXIST_ERROR);
         }
-        if(checkRoleKey(role.getRoleId(),role.getRoleKey())){
+        if(checkRoleKey(sysRoleUpdateReq.getRoleId(),sysRoleUpdateReq.getRoleKey())){
             throw new ServiceException(ResponseCodeEnum.ROLE_KEY_EXIST_ERROR);
         }
+        SysRole role = BeanUtil.toBean(sysRoleUpdateReq, SysRole.class);
         sysRoleMapper.updateById(role);
         //删除角色菜单关系
         sysRoleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());

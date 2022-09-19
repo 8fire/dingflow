@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -15,11 +17,13 @@ import java.util.List;
 
 /**
  * 用户对象 sys_user
- *
+ * 
  * @author snow
  */
 @Data
 @TableName("sys_user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -125,6 +129,10 @@ public class SysUser extends BaseEntity {
 
     public boolean isAdmin() {
         return Constants.ADMIN_ID.equals(this.userId);
+    }
+
+    public SysUser(Long userId){
+        this.userId=userId;
     }
 
 }

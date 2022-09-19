@@ -9,6 +9,8 @@ import com.agee.common.core.page.TableDataInfo;
 import com.agee.common.enums.BusinessType;
 import com.agee.framework.annotation.Idempotent;
 import com.agee.system.domain.SysRole;
+import com.agee.system.domain.req.SysRoleCreateReq;
+import com.agee.system.domain.req.SysRoleUpdateReq;
 import com.agee.system.service.SysRoleService;
 import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import io.swagger.annotations.Api;
@@ -52,15 +54,16 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "新增角色",notes = "该接口用于新增角色信息")
     @Idempotent
     @PostMapping
-    public R<Long> add(@Validated @RequestBody SysRole role) {
-        return R.ok(roleService.insertRole(role));
+    public R<Long> add(@Validated @RequestBody SysRoleCreateReq roleCreateReq) {
+        return R.ok(roleService.insertRole(roleCreateReq));
     }
 
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @Idempotent
-    @PutMapping
-    public R<?> edit(@Validated @RequestBody SysRole role) {
+    @PostMapping
+    @ApiOperation(value = "编辑角色",notes = "该接口用于编辑角色信息")
+    public R<?> edit(@Validated @RequestBody SysRoleUpdateReq role) {
         roleService.updateRole(role);
         return R.ok();
     }
@@ -68,13 +71,9 @@ public class SysRoleController extends BaseController {
     @SaCheckPermission("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{roleIds}")
+    @ApiOperation(value = "删除角色",notes = "该接口用于删除角色信息")
     public R<Integer> remove(@PathVariable Long[] roleIds) {
         return R.ok(roleService.deleteRoleByIds(roleIds));
     }
 
-    @GetMapping("/getRoleById")
-    public R<SysRole> getRoleById(@RequestParam(value = "id") Integer id) {
-        SysRole list = roleService.getById(id);
-        return R.ok(list);
-    }
 }

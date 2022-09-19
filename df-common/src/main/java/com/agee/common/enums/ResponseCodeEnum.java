@@ -40,6 +40,9 @@ public enum ResponseCodeEnum {
 
     ACCOUNT_CAPTCHA_ERROR(10014,"验证码不正确"),
 
+    ACCOUNT_UPDATE_SUPER_ERROR(10015,"不允许操作超级管理员用户"),
+
+
     ACCOUNT_NOT_AUTH_ERROR(11000,"没有访问权限，请联系管理员授权"),
 
 

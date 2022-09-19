@@ -18,7 +18,7 @@ public interface SysUserService extends IService<SysUser> {
     /**
      * 根据条件分页查询用户列表
      *
-     * @param user 用户信息
+     * @param sysUserPageQueryReq 用户信息
      * @return 用户信息集合信息
      */
     List<SysUser> selectUserList(SysUserPageQueryReq sysUserPageQueryReq);
@@ -44,4 +44,42 @@ public interface SysUserService extends IService<SysUser> {
      * @return 用户信息
      */
     SysUser selectUserByLoginName(String loginName);
+
+    /**
+     * 通过用户ID删除用户
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
+    int deleteUserById(Long userId);
+
+    /**
+     * 批量删除用户信息
+     *
+     * @param userIds 需要删除的用户ID
+     * @return 结果
+     */
+    int deleteUserByIds(Long[] userIds);
+
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param user 用户信息
+     */
+    void checkUserAllowed(SysUser user);
+
+    /**
+     * 通过用户ID查询用户
+     *
+     * @param userId 用户ID
+     * @return 用户对象信息
+     */
+     SysUser selectUserById(Long userId);
+
+    /**
+     * 保存用户角色关系
+     * @param userId 用户id
+     * @param roleIds 角色集合
+     */
+     void insertUserRole(Long userId, Long[] roleIds);
 }

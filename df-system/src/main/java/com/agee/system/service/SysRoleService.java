@@ -1,6 +1,8 @@
 package com.agee.system.service;
 
 import com.agee.system.domain.SysRole;
+import com.agee.system.domain.req.SysRoleCreateReq;
+import com.agee.system.domain.req.SysRoleUpdateReq;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param sysRole 角色信息
      * @return 角色id
      */
-    Long insertRole(SysRole sysRole);
+    Long insertRole(SysRoleCreateReq sysRoleCreateReq);
 
     /**
      * 修改保存角色信息
@@ -33,7 +35,7 @@ public interface SysRoleService extends IService<SysRole> {
      * @param role 角色信息
      * @return 结果
      */
-    void updateRole(SysRole role);
+    void updateRole(SysRoleUpdateReq role);
 
     /**
      * 批量删除角色信息
