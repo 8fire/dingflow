@@ -15,11 +15,26 @@ public interface SysRoleService extends IService<SysRole> {
 
     /**
      * 根据条件分页查询角色数据
+     * @param sysRole 角色实体
+     * @return 返回结果
+     */
+    List<SysRole> selectPageRoleList(SysRole sysRole);
+
+    /**
+     * 新增角色
+     * @param sysRole 角色信息
+     * @return 角色id
+     */
+    Long insertRole(SysRole sysRole);
+
+    /**
+     * 修改保存角色信息
      *
      * @param role 角色信息
-     * @return 角色数据集合信息
+     * @return 结果
      */
-    List<SysRole> selectRoleList(SysRole role);
+    void updateRole(SysRole role);
+
 
     /**
      * 根据用户ID查询角色权限

@@ -37,6 +37,12 @@ public enum ResponseCodeEnum {
 
     ACCOUNT_CAPTCHA_ERROR(10014,"验证码不正确"),
 
+    ROLE_NAME_EXIST_ERROR(10015,"角色名称已存在"),
+
+    ROLE_KEY_EXIST_ERROR(10016,"角色key已存在"),
+
+
+
     ACCOUNT_NOT_AUTH_ERROR(11000,"没有访问权限，请联系管理员授权"),
 
 
