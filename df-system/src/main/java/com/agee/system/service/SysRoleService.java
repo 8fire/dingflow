@@ -24,7 +24,7 @@ public interface SysRoleService extends IService<SysRole> {
 
     /**
      * 新增角色
-     * @param sysRole 角色信息
+     * @param sysRoleCreateReq 角色信息
      * @return 角色id
      */
     Long insertRole(SysRoleCreateReq sysRoleCreateReq);

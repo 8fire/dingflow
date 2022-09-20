@@ -1,6 +1,7 @@
 package com.agee.framework.service;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -17,6 +18,7 @@ import com.agee.common.utils.ServletUtils;
 import com.agee.framework.config.CaptchaProperties;
 import com.agee.framework.domain.LoginUser;
 import com.agee.system.domain.SysUser;
+import com.agee.system.domain.resp.SysUserResp;
 import com.agee.system.service.SysLogininforService;
 import com.agee.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +84,18 @@ public class AuthService {
         sysUserService.updateById(sysUser);
     }
 
+    public SysUserResp getUserInfo(){
+        SysUser sysUser = sysUserService.selectUserByLoginName(SecurityUtils.getLoginName());
+        SysUserResp sysUserResp= BeanUtil.toBean(sysUser,SysUserResp.class);
+        sysUserResp.setPermissions( permissionService.getMenuPermission(sysUser));
+        sysUserResp.setRoles(permissionService.getRolePermission(sysUser));
+        return sysUserResp;
+    }
+
+    public void logout() {
+        StpUtil.logout();
+        logininforService.recordLogininfor(SecurityUtils.getUserName(), Constants.LOGOUT, "退出登录成功", ServletUtils.getRequest());
+    }
 
     public void validateCaptcha(String username, String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StrUtil.nullToDefault(uuid, "");

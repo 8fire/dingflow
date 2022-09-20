@@ -50,7 +50,7 @@ public class SysRoleController extends BaseController {
     }
 
 
-    @SaCheckPermission("system:role:add")
+ //   @SaCheckPermission("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增角色",notes = "该接口用于新增角色信息")
     @Idempotent
@@ -81,6 +81,7 @@ public class SysRoleController extends BaseController {
     @SaCheckPermission("system:role:saveAuthUsers")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/saveAuthUsers")
+    @ApiOperation(value = "绑定用户角色",notes = "该接口用于绑定用户角色信息")
     public R<Integer> saveAuthUsers(Long roleId, Long[] userIds) {
         return R.ok(roleService.insertAuthUsers(roleId, userIds));
     }

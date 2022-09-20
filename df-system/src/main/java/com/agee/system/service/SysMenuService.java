@@ -3,6 +3,7 @@ package com.agee.system.service;
 import com.agee.system.domain.SysMenu;
 import com.agee.system.domain.req.SysMenuCreateReq;
 import com.agee.system.domain.req.SysMenuUpdateReq;
+import com.agee.system.domain.resp.RouterResp;
 import com.agee.system.domain.resp.TreeSelectResp;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -91,6 +92,14 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     SysMenu selectMenuById(Long menuId);
 
+    /**
+     * 根据用户ID查询菜单树信息
+     *
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
+    List<SysMenu> selectMenuTreeByUserId(Long userId);
+
 
     /**
      * 构建前端所需要下拉树结构
@@ -99,6 +108,14 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return 下拉树结构列表
      */
     List<TreeSelectResp> buildMenuTreeSelect(List<SysMenu> menus);
+
+    /**
+     * 构建前端路由所需要的菜单
+     *
+     * @param menus 菜单列表
+     * @return 路由列表
+     */
+    List<RouterResp> buildMenus(List<SysMenu> menus);
 
     /**
      * 构建前端所需要树结构
