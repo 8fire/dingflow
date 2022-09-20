@@ -53,4 +53,12 @@ public interface SysRoleService extends IService<SysRole> {
      * @return 权限列表
      */
     Set<String> selectRolePermissionByUserId(Long userId);
+
+    /**
+     * 用户授权角色
+     *
+     * @param roleId 用户ID
+     * @param userIds 角色组
+     */
+    int insertAuthUsers(Long roleId, Long[] userIds);
 }

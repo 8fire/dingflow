@@ -105,6 +105,8 @@ public class SysUser extends BaseEntity {
 
     @ApiModelProperty(value = "钉钉用户id")
     private String dingUserId;
+    /** 备注 */
+    private String remark;
 
     @TableField(exist = false)
     private String deptName;

@@ -29,11 +29,11 @@ import java.util.List;
  * @Description: 系统用户服务
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/user")
 @Validated
 @Api(tags = "系统用户服务")
 @Slf4j
-@ApiSort(1)
+@ApiSort(2)
 @RequiredArgsConstructor
 public class SysUserController extends BaseController {
 

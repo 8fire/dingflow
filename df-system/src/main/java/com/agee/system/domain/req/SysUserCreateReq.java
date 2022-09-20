@@ -89,8 +89,11 @@ public class SysUserCreateReq implements Serializable {
     @ApiModelProperty(value = "组织邮箱,暂时没用")
     private String orgEmail;
 
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty(value = "创建人",hidden = true)
     private String createBy;
+
+    @ApiModelProperty(value = "备注")
+    private String remark;
 
     @ApiModelProperty(value = "角色组")
     private Long[] roleIds;

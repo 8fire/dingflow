@@ -38,6 +38,9 @@ public class SysRoleUpdateReq implements Serializable {
     @ApiModelProperty(value = "是否内置角色（0-内置，1-不）")
     private Integer builtIn;
 
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
     @ApiModelProperty(value = "菜单权限组")
     private Long[] menuIds;
 }

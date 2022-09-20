@@ -68,7 +68,6 @@ public class SysUserUpdateReq implements Serializable {
     @ApiModelProperty(value = "分机号")
     private String tel;
 
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "入职时间")
     private Date hiredDate;
@@ -78,6 +77,9 @@ public class SysUserUpdateReq implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private String updateBy;
+
+    @ApiModelProperty(value = "备注")
+    private String remark;
 
     @ApiModelProperty(value = "角色组")
     private Long[] roleIds;

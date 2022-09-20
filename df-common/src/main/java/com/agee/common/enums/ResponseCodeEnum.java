@@ -68,7 +68,10 @@ public enum ResponseCodeEnum {
     ROLE_ALLOT_ERROR(21004,"角色已被分配，不能删除"),
 
 
-
+    //菜单相关
+    MENU_NAME_EXIST_ERROR(22000,"菜单名称已存在"),
+    MENU_ADDRESS_ERROR(22001,"地址必须以http(s)://开头"),
+    MENU_PARENT_ERROR(22002,"上级菜单不能选择自己"),
 
 
 

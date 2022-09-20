@@ -25,8 +25,8 @@ public class SecurityUtils {
      * 获取当前登录人userId
      * @return 返回userId
      */
-    public static int getLoginUserId(){
-        return StpUtil.getLoginIdAsInt();
+    public static Long getLoginUserId(){
+        return StpUtil.getLoginIdAsLong();
     }
 
     /**

@@ -42,10 +42,6 @@ public class BaseEntity implements Serializable {
     @TableLogic
     private Integer delFlag;
 
-    /** 备注 */
-    @TableField(exist = false)
-    private String remark;
-
     /** 请求参数 */
     @TableField(exist = false)
     private Map<String, Object> params;

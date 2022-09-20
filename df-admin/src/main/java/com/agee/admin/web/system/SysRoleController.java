@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ import java.util.List;
 @Validated
 @Api(tags = "系统角色服务")
 @Slf4j
-@ApiSort(1)
+@ApiSort(3)
 @RequiredArgsConstructor
 public class SysRoleController extends BaseController {
 
@@ -53,15 +54,15 @@ public class SysRoleController extends BaseController {
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @ApiOperation(value = "新增角色",notes = "该接口用于新增角色信息")
     @Idempotent
-    @PostMapping
-    public R<Long> add(@Validated @RequestBody SysRoleCreateReq roleCreateReq) {
+    @PostMapping("/add")
+    public R<Long> add(@Valid @RequestBody SysRoleCreateReq roleCreateReq) {
         return R.ok(roleService.insertRole(roleCreateReq));
     }
 
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @Idempotent
-    @PostMapping
+    @PostMapping("/edit")
     @ApiOperation(value = "编辑角色",notes = "该接口用于编辑角色信息")
     public R<?> edit(@Validated @RequestBody SysRoleUpdateReq role) {
         roleService.updateRole(role);
@@ -70,10 +71,17 @@ public class SysRoleController extends BaseController {
 
     @SaCheckPermission("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{roleIds}")
+    @DeleteMapping("/remove/{roleIds}")
     @ApiOperation(value = "删除角色",notes = "该接口用于删除角色信息")
     public R<Integer> remove(@PathVariable Long[] roleIds) {
         return R.ok(roleService.deleteRoleByIds(roleIds));
     }
 
+
+    @SaCheckPermission("system:role:saveAuthUsers")
+    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @PutMapping("/saveAuthUsers")
+    public R<Integer> saveAuthUsers(Long roleId, Long[] userIds) {
+        return R.ok(roleService.insertAuthUsers(roleId, userIds));
+    }
 }

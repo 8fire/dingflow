@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.agee.common.core.constant.Constants;
 import com.agee.common.enums.ResponseCodeEnum;
 import com.agee.common.exception.ServiceException;
@@ -21,6 +22,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -51,12 +53,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
 
     @Override
     public Long insertRole(SysRoleCreateReq sysRoleCreateReq) {
-        if(checkRoleName(null,sysRoleCreateReq.getRoleName())){
-            throw new ServiceException(ResponseCodeEnum.ROLE_NAME_EXIST_ERROR);
-        }
-        if(checkRoleKey(null,sysRoleCreateReq.getRoleKey())){
-            throw new ServiceException(ResponseCodeEnum.ROLE_KEY_EXIST_ERROR);
-        }
+        validRole(null,sysRoleCreateReq.getRoleName(),sysRoleCreateReq.getRoleKey());
         SysRole sysRole = BeanUtil.toBean(sysRoleCreateReq, SysRole.class);
         sysRoleMapper.insertRole(sysRole);
         //新增角色菜单关系
@@ -67,14 +64,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
     @Override
     public void updateRole(SysRoleUpdateReq sysRoleUpdateReq) {
         SysRole sysRole = sysRoleMapper.selectById(sysRoleUpdateReq.getRoleId());
+        //效验参数
+        validRole(sysRoleUpdateReq.getRoleId(),sysRoleUpdateReq.getRoleName(),sysRoleUpdateReq.getRoleKey());
         if(Constants.BUILT_IN_STATUS.equals(sysRole.getBuiltIn())){
             throw new ServiceException(ResponseCodeEnum.ROLE_BUILT_IN_ERROR);
-        }
-        if(checkRoleName(sysRoleUpdateReq.getRoleId(),sysRoleUpdateReq.getRoleName())){
-            throw new ServiceException(ResponseCodeEnum.ROLE_NAME_EXIST_ERROR);
-        }
-        if(checkRoleKey(sysRoleUpdateReq.getRoleId(),sysRoleUpdateReq.getRoleKey())){
-            throw new ServiceException(ResponseCodeEnum.ROLE_KEY_EXIST_ERROR);
         }
         SysRole role = BeanUtil.toBean(sysRoleUpdateReq, SysRole.class);
         sysRoleMapper.updateById(role);
@@ -113,6 +106,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
         return perms.stream().map(SysRole::getRoleKey).collect(Collectors.toSet());
     }
 
+    @Override
+    public int insertAuthUsers(Long roleId, Long[] userIds) {
+        List<SysUserRole> userRoleList = Arrays.stream(userIds).map(userId -> new SysUserRole(userId, roleId)).collect(Collectors.toList());
+        return sysUserRoleMapper.batchUserRole(userRoleList) ;
+    }
+
     /**
      * 绑定角色菜单关系
      * @param role 角色实体
@@ -127,6 +126,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>  imp
             sysRoleMenu.setMenuId(menuId);
             sysRoleMenu.setRoleId(role.getRoleId());
             sysRoleMenuMapper.insert(sysRoleMenu);
+        }
+    }
+
+    private void validRole(Long roleId,String roleName,String roleKey){
+        if(StrUtil.isNotEmpty(roleName)&&checkRoleName(roleId,roleName)){
+            throw new ServiceException(ResponseCodeEnum.ROLE_NAME_EXIST_ERROR);
+        }
+        if(StrUtil.isNotEmpty(roleKey)&&checkRoleKey(roleId,roleKey)){
+            throw new ServiceException(ResponseCodeEnum.ROLE_KEY_EXIST_ERROR);
         }
     }
 
