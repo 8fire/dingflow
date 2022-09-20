@@ -28,7 +28,7 @@ public class SysJobLogController extends BaseController {
      */
 //    @PreAuthorize("@ss.hasPermi('monitor:job:list')")
     @GetMapping("/list")
-    public R<TableDataInfo> list(SysJobLog sysJobLog) {
+    public R<TableDataInfo<SysJobLog>> list(SysJobLog sysJobLog) {
         startPage();
         List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
         return getDataTable(list);

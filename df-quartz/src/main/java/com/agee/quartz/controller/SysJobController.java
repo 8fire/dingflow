@@ -35,7 +35,7 @@ public class SysJobController extends BaseController {
      */
 //    @PreAuthorize("@ss.hasPermi('monitor:job:list')")
     @GetMapping("/list")
-    public R<TableDataInfo> list(SysJob sysJob) {
+    public R<TableDataInfo<SysJob>> list(SysJob sysJob) {
         startPage();
         List<SysJob> list = jobService.selectJobList(sysJob);
         return getDataTable(list);
