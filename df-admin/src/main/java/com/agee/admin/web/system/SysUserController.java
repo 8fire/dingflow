@@ -5,7 +5,7 @@ import com.agee.common.annotation.Log;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;
-import com.agee.common.enums.BusinessType;
+import com.agee.common.enums.BusinessTypeEnum;
 import com.agee.framework.annotation.Idempotent;
 import com.agee.framework.service.SecurityUtils;
 import com.agee.system.domain.SysUser;
@@ -50,7 +50,7 @@ public class SysUserController extends BaseController {
 
 
     @SaCheckPermission("system:user:add")
-    @Log(title = "用户管理", businessType = BusinessType.INSERT)
+    @Log(title = "用户管理", businessType = BusinessTypeEnum.INSERT)
     @PostMapping("/add")
     @Idempotent
     @ApiOperation(value = "新增用户",notes = "该接口用于新增用户信息")
@@ -61,7 +61,7 @@ public class SysUserController extends BaseController {
     }
 
     @SaCheckPermission("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.INSERT)
+    @Log(title = "用户管理", businessType = BusinessTypeEnum.INSERT)
     @PostMapping("/edit")
     @Idempotent
     @ApiOperation(value = "编辑用户",notes = "该接口用于编辑用户信息")
@@ -71,7 +71,7 @@ public class SysUserController extends BaseController {
     }
 
     @SaCheckPermission("system:user:remove")
-    @Log(title = "用户管理", businessType = BusinessType.DELETE)
+    @Log(title = "用户管理", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     @Idempotent
     @ApiOperation(value = "删除用户",notes = "该接口用于删除用户信息")
@@ -81,7 +81,7 @@ public class SysUserController extends BaseController {
 
 
     @SaCheckPermission("system:user:changeStatus")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @Log(title = "用户管理", businessType = BusinessTypeEnum.UPDATE)
     @GetMapping("/changeStatus")
     @Idempotent
     @ApiOperation(value = "编辑用户状态",notes = "该接口用于编辑用户状态信息")
@@ -95,7 +95,7 @@ public class SysUserController extends BaseController {
     }
 
     @SaCheckPermission("system:user:authRole")
-    @Log(title = "用户管理", businessType = BusinessType.GRANT)
+    @Log(title = "用户管理", businessType = BusinessTypeEnum.GRANT)
     @PostMapping("/authRole")
     @ApiOperation(value = "用户角色授权",notes = "该接口用于用户角色授权信息")
     public R<Void> insertAuthRole(Long userId, Long[] roleIds) {

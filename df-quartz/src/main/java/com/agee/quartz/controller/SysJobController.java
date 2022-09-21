@@ -4,7 +4,6 @@ import com.agee.common.core.constant.Constants;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;
-import com.agee.common.enums.BusinessType;
 import com.agee.common.exception.job.TaskException;
 import com.agee.common.utils.StringUtils;
 import com.agee.quartz.domain.SysJob;
@@ -13,10 +12,8 @@ import com.agee.quartz.util.CronUtils;
 import com.agee.quartz.util.ScheduleUtils;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**

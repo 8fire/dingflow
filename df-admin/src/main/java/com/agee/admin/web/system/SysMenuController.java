@@ -4,7 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.agee.common.annotation.Log;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
-import com.agee.common.enums.BusinessType;
+import com.agee.common.enums.BusinessTypeEnum;
 import com.agee.framework.annotation.Idempotent;
 import com.agee.framework.service.SecurityUtils;
 import com.agee.system.domain.SysMenu;
@@ -64,7 +64,7 @@ public class SysMenuController extends BaseController {
 
 
     @SaCheckPermission("system:menu:add")
-    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
+    @Log(title = "菜单管理", businessType = BusinessTypeEnum.INSERT)
     @PostMapping("/add")
     @Idempotent
     @ApiOperation(value = "新增菜单",notes = "该接口用于新增菜单信息")
@@ -74,7 +74,7 @@ public class SysMenuController extends BaseController {
     }
 
     @SaCheckPermission("system:menu:edit")
-    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+    @Log(title = "菜单管理", businessType = BusinessTypeEnum.UPDATE)
     @PostMapping("/edit")
     @Idempotent
     @ApiOperation(value = "编辑菜单",notes = "该接口用于编辑菜单信息")
@@ -84,7 +84,7 @@ public class SysMenuController extends BaseController {
 
 
     @SaCheckPermission("system:menu:remove")
-    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
+    @Log(title = "菜单管理", businessType = BusinessTypeEnum.DELETE)
     @GetMapping("/remove/{menuId}")
     @ApiOperation(value = "删除菜单",notes = "该接口用于删除菜单信息")
     public R<Integer> remove(@PathVariable("menuId") Long menuId) {

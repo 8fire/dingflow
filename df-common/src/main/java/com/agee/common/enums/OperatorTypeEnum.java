@@ -5,7 +5,7 @@ package com.agee.common.enums;
  *
  * @author ruoyi
  */
-public enum OperatorType {
+public enum OperatorTypeEnum {
     /**
      * 其它
      */

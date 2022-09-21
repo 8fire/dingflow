@@ -1,7 +1,7 @@
 package com.agee.common.annotation;
 
-import com.agee.common.enums.BusinessType;
-import com.agee.common.enums.OperatorType;
+import com.agee.common.enums.BusinessTypeEnum;
+import com.agee.common.enums.OperatorTypeEnum;
 
 import java.lang.annotation.*;
 
@@ -22,12 +22,12 @@ public @interface Log {
     /**
      * 功能
      */
-    BusinessType businessType() default BusinessType.OTHER;
+    BusinessTypeEnum businessType() default BusinessTypeEnum.OTHER;
 
     /**
      * 操作人类别
      */
-    OperatorType operatorType() default OperatorType.MANAGE;
+    OperatorTypeEnum operatorType() default OperatorTypeEnum.MANAGE;
 
     /**
      * 是否保存请求的参数

@@ -6,7 +6,7 @@ import com.agee.common.core.constant.Constants;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;
-import com.agee.common.enums.BusinessType;
+import com.agee.common.enums.BusinessTypeEnum;
 import com.agee.framework.annotation.Idempotent;
 import com.agee.system.domain.SysRole;
 import com.agee.system.domain.req.SysRoleCreateReq;
@@ -51,7 +51,7 @@ public class SysRoleController extends BaseController {
 
 
  //   @SaCheckPermission("system:role:add")
-    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @Log(title = "角色管理", businessType = BusinessTypeEnum.INSERT)
     @ApiOperation(value = "新增角色",notes = "该接口用于新增角色信息")
     @Idempotent
     @PostMapping("/add")
@@ -60,7 +60,7 @@ public class SysRoleController extends BaseController {
     }
 
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @Log(title = "角色管理", businessType = BusinessTypeEnum.UPDATE)
     @Idempotent
     @PostMapping("/edit")
     @ApiOperation(value = "编辑角色",notes = "该接口用于编辑角色信息")
@@ -70,7 +70,7 @@ public class SysRoleController extends BaseController {
     }
 
     @SaCheckPermission("system:role:remove")
-    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @Log(title = "角色管理", businessType = BusinessTypeEnum.DELETE)
     @DeleteMapping("/remove/{roleIds}")
     @ApiOperation(value = "删除角色",notes = "该接口用于删除角色信息")
     public R<Integer> remove(@PathVariable Long[] roleIds) {
@@ -79,7 +79,7 @@ public class SysRoleController extends BaseController {
 
 
     @SaCheckPermission("system:role:saveAuthUsers")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @Log(title = "角色管理", businessType = BusinessTypeEnum.GRANT)
     @PutMapping("/saveAuthUsers")
     @ApiOperation(value = "绑定用户角色",notes = "该接口用于绑定用户角色信息")
     public R<Integer> saveAuthUsers(Long roleId, Long[] userIds) {

@@ -3,13 +3,11 @@ package com.agee.quartz.controller;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;
-import com.agee.common.enums.BusinessType;
 import com.agee.quartz.domain.SysJobLog;
 import com.agee.quartz.service.ISysJobLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
