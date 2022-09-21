@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.agee.framework.annotation.Idempotent;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.utils.ServletUtils;
 import com.agee.framework.resolver.IdempotentKeyResolver;
 import org.aspectj.lang.JoinPoint;

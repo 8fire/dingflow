@@ -2,7 +2,7 @@ package com.agee.common.core.domain;
 
 
 
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.enums.ResponseCodeEnum;
 
 import java.io.Serializable;

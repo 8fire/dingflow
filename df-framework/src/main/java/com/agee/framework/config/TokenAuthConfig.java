@@ -6,7 +6,7 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.hutool.core.collection.CollUtil;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.framework.domain.LoginUser;
 import com.agee.framework.service.SecurityUtils;
 import org.springframework.context.annotation.Bean;

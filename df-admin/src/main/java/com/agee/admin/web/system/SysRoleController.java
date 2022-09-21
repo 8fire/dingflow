@@ -2,7 +2,7 @@ package com.agee.admin.web.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.agee.common.annotation.Log;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.core.controller.BaseController;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.TableDataInfo;

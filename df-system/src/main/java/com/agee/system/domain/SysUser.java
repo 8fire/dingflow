@@ -1,6 +1,6 @@
 package com.agee.system.domain;
 
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

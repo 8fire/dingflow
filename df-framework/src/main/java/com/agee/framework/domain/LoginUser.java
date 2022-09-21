@@ -111,6 +111,11 @@ public class LoginUser implements Serializable {
     private String dingUserId;
 
     /**
+     * 部门管理
+     */
+    private String deptName;
+
+    /**
      * 菜单权限
      */
     private Set<String> menuPermission;

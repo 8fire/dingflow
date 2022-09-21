@@ -3,7 +3,7 @@ package com.agee.common.utils;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import com.agee.common.config.DingFlowConfig;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

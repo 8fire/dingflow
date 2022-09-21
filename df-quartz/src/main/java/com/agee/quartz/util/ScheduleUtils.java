@@ -2,7 +2,7 @@ package com.agee.quartz.util;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.agee.common.constant.ScheduleConstants;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.exception.job.TaskException;
 import com.agee.common.exception.job.TaskException.Code;
 import com.agee.common.utils.StringUtils;

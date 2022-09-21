@@ -1,14 +1,17 @@
 package com.agee.framework.listener;
 
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.SaLoginModel;
-import cn.hutool.extra.servlet.ServletUtil;
-import com.agee.common.utils.ServletUtils;
-import com.agee.system.domain.SysUser;
+import com.agee.common.constant.CacheConstants;
+import com.agee.common.utils.RedisUtils;
+import com.agee.framework.domain.LoginUser;
+import com.agee.framework.domain.UserLoginEvent;
+import com.agee.framework.service.SecurityUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * @author qimingjin
@@ -17,30 +20,39 @@ import java.util.Date;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class TokenListener implements SaTokenListener {
+
+    private final ApplicationContext applicationContext;
+
+    private final SaTokenConfig tokenConfig;
     /** 每次登录时触发 */
     @Override
     public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
-
-        System.out.println("---------- 自定义侦听器实现 doLogin");
+        //获取当前登录用户信息
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        applicationContext.publishEvent(new UserLoginEvent(this,tokenValue,tokenConfig.getTimeout(),loginUser));
     }
 
     /** 每次注销时触发 */
     @Override
     public void doLogout(String loginType, Object loginId, String tokenValue) {
-        System.out.println("---------- 自定义侦听器实现 doLogout");
+        RedisUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
+        log.info("user doLogout, userId:{}, token:{}", loginId, tokenValue);
     }
 
     /** 每次被踢下线时触发 */
     @Override
     public void doKickout(String loginType, Object loginId, String tokenValue) {
-        System.out.println("---------- 自定义侦听器实现 doKickout");
+        RedisUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
+        log.info("user doKickout, userId:{}, token:{}", loginId, tokenValue);
     }
 
     /** 每次被顶下线时触发 */
     @Override
     public void doReplaced(String loginType, Object loginId, String tokenValue) {
-        System.out.println("---------- 自定义侦听器实现 doReplaced");
+        RedisUtils.deleteObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue);
+        log.info("user doReplaced, userId:{}, token:{}", loginId, tokenValue);
     }
 
     /** 每次被封禁时触发 */

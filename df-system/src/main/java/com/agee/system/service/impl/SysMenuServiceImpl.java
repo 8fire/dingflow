@@ -3,7 +3,7 @@ package com.agee.system.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.enums.ResponseCodeEnum;
 import com.agee.common.exception.ServiceException;
 import com.agee.common.utils.StringUtils;

@@ -1,4 +1,4 @@
-package com.agee.common.core.constant;
+package com.agee.common.constant;
 
 /**
  * 通用常量信息

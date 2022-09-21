@@ -1,11 +1,11 @@
 package com.agee.common.core.controller;
 
 import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.core.domain.R;
 import com.agee.common.core.page.PageDomain;
 import com.agee.common.core.page.PageModel;
@@ -125,6 +125,12 @@ public class BaseController {
         Integer pageIndex = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
         TableDataInfo<T> rspData = new TableDataInfo<T>();
+        if(CollUtil.isEmpty(list)){
+            rspData.setTotal(list.size());
+            rspData.setPageIndex(pageIndex);
+            rspData.setPageSize(pageSize);
+            return R.ok(rspData);
+        }
         int totalCount = list.size();
         int pageCount = 0;
         List<T> subList;

@@ -1,7 +1,7 @@
 package com.agee.common.utils;
 
 import cn.hutool.core.text.StrFormatter;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;

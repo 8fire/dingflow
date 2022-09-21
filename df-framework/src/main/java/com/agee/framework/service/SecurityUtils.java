@@ -8,10 +8,9 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.agee.common.bcrypt.BCryptPasswordEncoder;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.enums.DeviceTypeEnum;
 import com.agee.framework.domain.LoginUser;
-import sun.security.provider.MD5;
 
 /**
  * @author qimingjin

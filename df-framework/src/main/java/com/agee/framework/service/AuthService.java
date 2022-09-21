@@ -7,8 +7,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.agee.common.bcrypt.BCryptPasswordEncoder;
-import com.agee.common.core.constant.CacheConstants;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.CacheConstants;
+import com.agee.common.constant.Constants;
 import com.agee.common.enums.DeviceTypeEnum;
 import com.agee.common.enums.EnableDisableStatusEnum;
 import com.agee.common.enums.ResponseCodeEnum;
@@ -19,13 +19,18 @@ import com.agee.framework.config.CaptchaProperties;
 import com.agee.framework.domain.LoginUser;
 import com.agee.system.domain.SysUser;
 import com.agee.system.domain.resp.SysUserResp;
+import com.agee.system.domain.resp.UserOnlineResp;
 import com.agee.system.service.SysLogininforService;
 import com.agee.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @program: df
@@ -95,6 +100,35 @@ public class AuthService {
     public void logout() {
         StpUtil.logout();
         logininforService.recordLogininfor(SecurityUtils.getUserName(), Constants.LOGOUT, "退出登录成功", ServletUtils.getRequest());
+    }
+
+    public List<UserOnlineResp>  getUserOnlineList(String ipaddr, String userName){
+        // 获取所有未过期的 token
+        List<String> keys = StpUtil.searchTokenValue("", -1, 0,true);
+        List<UserOnlineResp> userOnlineDTOList = new ArrayList<>();
+        for (String key : keys) {
+            String token = key.replace(CacheConstants.DF_USER_TOKEN_KEY, "");
+            // 如果已经过期则跳过
+            if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
+                continue;
+            }
+            userOnlineDTOList.add(RedisUtils.getCacheObject(CacheConstants.ONLINE_TOKEN_KEY + token));
+        }
+        if (StrUtil.isNotEmpty(ipaddr) && StrUtil.isNotEmpty(userName)) {
+            userOnlineDTOList= userOnlineDTOList.stream().filter( userOnline ->
+                    StrUtil.equals(ipaddr, userOnline.getIpaddr()) && StrUtil.equals(userName, userOnline.getUserName())
+            ).collect(Collectors.toList());
+        } else if (StrUtil.isNotEmpty(ipaddr)) {
+
+            userOnlineDTOList= userOnlineDTOList.stream().filter( userOnline ->
+                    StrUtil.equals(ipaddr, userOnline.getIpaddr())).collect(Collectors.toList());
+        } else if (StrUtil.isNotEmpty(userName)) {
+            userOnlineDTOList= userOnlineDTOList.stream().filter( userOnline ->
+                    StrUtil.equals(ipaddr, userOnline.getUserName())).collect(Collectors.toList());
+        }
+        Collections.reverse(userOnlineDTOList);
+        userOnlineDTOList.removeAll(Collections.singleton(null));
+        return userOnlineDTOList;
     }
 
     public void validateCaptcha(String username, String code, String uuid) {

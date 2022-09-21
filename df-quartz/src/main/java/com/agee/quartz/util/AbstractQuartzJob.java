@@ -3,7 +3,7 @@ package com.agee.quartz.util;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.agee.common.constant.ScheduleConstants;
-import com.agee.common.core.constant.Constants;
+import com.agee.common.constant.Constants;
 import com.agee.common.utils.ExceptionUtil;
 import com.agee.quartz.domain.SysJob;
 import com.agee.quartz.domain.SysJobLog;
